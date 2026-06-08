@@ -1,0 +1,53 @@
+.input {
+    border: 2px solid var(--border);
+    border-radius: var(--round-md);
+    background-color: var(--input);
+    padding: 7px;
+    outline: none;
+    transition: all 0.2s;
+    color: inherit;
+}
+
+.input-label {
+    margin-bottom: 5px;
+    color: inherit;
+    font-size: 0.875rem;
+}
+
+.input:focus {
+    border-color: var(--primary);
+}
+
+.input:disabled {
+    opacity: 50%;
+    pointer-events: none;
+}
+
+.input[type="file"] {
+    padding: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.input[type="file"]::file-selector-button {
+    border: none;
+    background-color: var(--border);
+    color: inherit;
+    padding: 4px 10px;
+    border-radius: calc(var(--round-md) - 3px);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 10px;
+}
+
+.input[type="file"]:hover::file-selector-button {
+    filter: brightness(0.9);
+}
+
+/* Active/Focus states */
+.input[type="file"]:focus-visible {
+    border-color: var(--primary);
+}

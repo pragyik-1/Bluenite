@@ -1,0 +1,44 @@
+.button {
+    border-radius: var(--round-md);
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: all 0.2s;
+    border: none
+}
+
+.button:disabled {
+    opacity: 50%;
+    pointer-events: none;
+}
+
+.button.fill {
+    background-color: var(--btn-color);
+    color: var(--btn-text);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button.fill:hover {
+    background-color: var(--btn-hover);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.button.outline {
+    border: 1px solid;
+    border-color: var(--border);
+    color: var(--btn-text);
+    background: transparent;
+}
+
+.button.outline:hover {
+    border-color: var(--btn-color);
+    background: color-mix(in srgb, var(--btn-color) 20%, transparent);
+}
+
+.button.ghost {
+  color: var(--btn-text);
+  background: transparent;
+}
+
+.button.ghost:hover {
+  background: color-mix(in srgb, var(--btn-color) 20%, transparent);
+}
