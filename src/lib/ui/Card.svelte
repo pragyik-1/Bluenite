@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
   import '../styles/Card.css'
 
-  export type CardProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+  export type CardProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
     title?: string
     subtitle?: string
     interactive?: boolean
@@ -24,9 +24,9 @@
   }: CardProps = $props()
 </script>
 
-<div 
-  class="card {customClass}" 
-  class:interactive 
+<div
+  class="card {customClass}"
+  class:interactive
   {...rest}
 >
   {#if title || subtitle || header}

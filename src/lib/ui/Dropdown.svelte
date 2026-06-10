@@ -5,17 +5,11 @@
   import '../styles/Dropdown.css'
   import { fade } from 'svelte/transition'
 
-  type DropDownProps = HTMLAttributes<HTMLDivElement> & {
+  export type DropDownProps = HTMLAttributes<HTMLDivElement> & {
     open?: boolean
     anchor: HTMLElement | null
     children?: Snippet
-    placement?:
-      | 'top'
-      | 'right'
-      | 'bottom'
-      | 'left'
-      | 'bottom-start'
-      | 'bottom-end'
+    placement?: 'top' | 'right' | 'bottom' | 'left' | 'bottom-start' | 'bottom-end'
     onClose?: () => void
   }
 
@@ -53,7 +47,7 @@
     class="dropdown"
     bind:this={dropdownNode}
     use:floatingAnchor={{ anchorElement: anchor, placement }}
-    transition:fade={{ duration: 150 }}
+    transition:fade={{ duration: 100 }}
     {...rest}
   >
     {@render children?.()}

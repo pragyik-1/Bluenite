@@ -1,0 +1,18 @@
+.textarea {
+  border-width: 1px;
+  width: 100%;
+  resize: none;
+  border-radius: var(--round-lg);
+  border-style: solid;
+  border-color: var(--border);
+  background-color: var(--input);
+  outline: none;
+  color: inherit;
+  transition: background-color 0.2s;
+  padding: 7px;
+}
+
+.textarea:focus {
+  background-color: var(--input-focus);
+  border-color: var(--primary)
+}

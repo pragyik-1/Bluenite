@@ -3,7 +3,7 @@
   import '../styles/Row.css'
   import type { HTMLAttributes } from 'svelte/elements'
 
-  type RowProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+  export type RowProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
     children?: Snippet
     gap?: number
     justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
@@ -21,10 +21,6 @@
   }
 </script>
 
-<div
-  class="row-container"
-  style="--row-gap: {gap}rem; {justifyStyles[justify]}"
-  {...rest}
->
+<div class="row-container" style="--row-gap: {gap}rem; {justifyStyles[justify]}" {...rest}>
   {@render children?.()}
 </div>

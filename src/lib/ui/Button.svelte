@@ -3,7 +3,7 @@
   import type { HTMLButtonAttributes } from 'svelte/elements'
   import '../styles/Button.css'
 
-  type ButtonProps = Omit<HTMLButtonAttributes, 'children'> & {
+  export type ButtonProps = Omit<HTMLButtonAttributes, 'children'> & {
     variant?: 'fill' | 'outline' | 'ghost'
     children?: Snippet
     color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
@@ -21,9 +21,7 @@
 
 <button
   style="--btn-color: var(--{color}); --btn-hover: var(--{color}-hover); 
-    --btn-text: {variant === 'ghost'
-    ? 'var(--primary)'
-    : 'var(--primary-text)'};"
+    --btn-text: {variant === 'ghost' ? 'var(--primary)' : 'var(--primary-text)'};"
   class="button {variant}"
   bind:this={ref}
   {...rest}

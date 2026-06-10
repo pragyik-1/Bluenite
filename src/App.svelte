@@ -1,12 +1,19 @@
 <script>
-  import Row from './lib/ui/Row.svelte'
-  import Button from './lib/ui/Button.svelte'
-  import './app.css'
-  import Input from './lib/ui/Input.svelte'
-  import Dropdown from './lib/ui/Dropdown.svelte'
-  import Select from './lib/ui/Select.svelte'
-  import Card from './lib/ui/Card.svelte'
-    import Modal from './lib/ui/Modal.svelte'
+  import {
+    Row,
+    Button,
+    Input,
+    Dropdown,
+    Select,
+    Card,
+    Modal,
+    Switch,
+    NavBar,
+    Textarea,
+    ToastManager,
+    toast,
+    toggleTheme,
+  } from './lib'
 
   let buttonRef = $state(null)
   let dropdownOpen = $state(false)
@@ -14,6 +21,10 @@
   let val = $state(null)
   $inspect(dropdownOpen)
 </script>
+
+<NavBar behavior="hide-on-scroll">
+  <div>Hello World</div>
+</NavBar>
 
 <p>Hello world</p>
 
@@ -23,13 +34,12 @@
   <Button variant="ghost">Hello World!</Button>
 </Card>
 
-<Button onclick={() => (dropdownOpen = !dropdownOpen)} bind:ref={buttonRef}>
-  Dropdown
-</Button>
+<Button onclick={() => (dropdownOpen = !dropdownOpen)} bind:ref={buttonRef}>Dropdown</Button>
 
 <Dropdown bind:open={dropdownOpen} anchor={buttonRef}>Hello</Dropdown>
 
 <Input type="file" />
+<Input />
 
 <Row gap={1}>
   <p>Hello World</p>
@@ -38,6 +48,17 @@
   <p>Hello World</p>
 </Row>
 
-<Select value={val} options={[{ value: 'apple', label: 'Apple' }]} />
+<Select
+  value={val}
+  options={[
+    { value: 'apple', label: 'Apple' },
+    { value: 'sauce', label: 'apple' },
+  ]}
+/>
 <Button onclick={() => (modalOpen = true)}>Open Modal</Button>
+<Button onclick={() => toast.show({ message: 'Cool Toast', variant: 'warn' })}>Show toast</Button>
+<Button onclick={toggleTheme}>Toogle themne</Button>
+<Switch size="md"></Switch>
+<Textarea></Textarea>
 <Modal bind:open={modalOpen}>Hello World</Modal>
+<ToastManager />

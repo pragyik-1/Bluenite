@@ -34,69 +34,98 @@ html {
 :root {
   --bg: rgb(13, 14, 20);
   --text: rgb(255, 255, 255);
+
   --input: rgb(31, 34, 45);
   --input-focus: rgb(40, 44, 58);
+
   --primary: rgb(99, 102, 241);
+  --primary-hover: rgb(79, 70, 229);
+
   --surface: rgb(21, 23, 32);
   --surface-hover: rgb(27, 30, 42);
-  --primary-hover: rgb(79, 70, 229);
+
   --border: rgb(36, 40, 53);
+
   --primary-text: rgb(242, 244, 248);
   --secondary-text: rgb(158, 163, 176);
   --muted-text: rgb(100, 109, 124);
+
   --danger: rgb(255, 94, 94);
   --danger-hover: rgb(235, 79, 79);
+
   --secondary: rgb(140, 94, 255);
   --secondary-hover: rgb(122, 80, 230);
+
   --info: rgb(60, 194, 255);
   --info-hover: rgb(28, 176, 246);
+
   --success: rgb(16, 185, 129);
   --success-hover: rgb(5, 150, 105);
+
   --warn: rgb(255, 173, 51);
   --warn-hover: rgb(230, 154, 45);
 
+  --control: rgb(255, 255, 255);
+  --control-bg: rgb(48, 53, 69);
+
   --round-sm: 0.25rem;
   --round-md: 0.5rem;
-  --round-lg: 0.75rem;
-  --round-xl: 1rem;
-  --round-full: 50%;
+  --round-lg: 0.8rem;
+  --round-xl: 1.25rem;
+
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', monospace;
 }
 
 html.light {
-  --bg: #fafafa;
-  --text: #1a1a1a;
-  --input: #e0e0e0;
-  --primary: #005fcc;
-  --surface: #ffffff;
-  --primary-hover: #004bb5;
-  --hover: #f0f0f0;
-  --border: #d0d0d0;
-  --primary-text: #ffffff;
-  --danger: #d32f2f;
-  --danger-hover: #c62828;
-  --secondary: #6200ea;
-  --secondary-hover: #4b00b5;
-  --info: #1565c0;
-  --info-hover: #0d47a1;
-  --success: #388e3c;
-  --success-hover: #2e7d32;
-  --warning: #f57c00;
-  --warning-hover: #ef6c00;
+  --bg: rgb(243, 246, 252);
+
+  --surface: rgb(255, 255, 255);
+  --surface-hover: rgb(246, 248, 253);
+
+  --input: rgb(250, 251, 255);
+  --input-focus: rgb(243, 246, 252);
+
+  --border: rgb(216, 223, 235);
+
+  --text: rgb(0, 0, 0);
+  --primary-text: rgb(28, 33, 45);
+  --secondary-text: rgb(84, 94, 112);
+  --muted-text: rgb(115, 125, 145);
+
+  --primary: rgb(99, 102, 241);
+  --primary-hover: rgb(79, 70, 229);
+
+  --secondary: rgb(140, 94, 255);
+  --secondary-hover: rgb(122, 80, 230);
+
+  --info: rgb(60, 194, 255);
+  --info-hover: rgb(28, 176, 246);
+
+  --success: rgb(16, 185, 129);
+  --success-hover: rgb(5, 150, 105);
+
+  --warn: rgb(255, 173, 51);
+  --warn-hover: rgb(230, 154, 45);
+
+  --danger: rgb(255, 94, 94);
+  --danger-hover: rgb(235, 79, 79);
+
+  --control: rgb(255, 255, 255);
+  --control-bg: rgb(203, 213, 225);
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Open Sans',
-    'Helvetica Neue',
-    sans-serif;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

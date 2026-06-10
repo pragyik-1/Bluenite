@@ -1,7 +1,7 @@
 .card {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--round-md);
+  border-radius: var(--round-lg);
   color: var(--primary-text);
   display: flex;
   flex-direction: column;

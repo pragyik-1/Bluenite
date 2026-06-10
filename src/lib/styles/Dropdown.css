@@ -1,7 +1,6 @@
 .dropdown {
     position: absolute;
     z-index: 9999;
-    margin-top: 0.5rem;
     border: 1px solid var(--border);
     background-color: var(--surface);
     border-radius: var(--round-md);

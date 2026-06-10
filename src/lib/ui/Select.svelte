@@ -1,8 +1,8 @@
 <script lang="ts">
   import Dropdown from './Dropdown.svelte'
   import '../styles/Select.css'
-  import '../styles/Input.css' 
-    import type { HTMLButtonAttributes } from 'svelte/elements'
+  import '../styles/Input.css'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
 
   export type SelectOption = {
     label: string
@@ -10,7 +10,7 @@
     [key: string]: unknown
   }
 
-  type SelectProps = Omit<HTMLButtonAttributes, "children"> & {
+  export type SelectProps = Omit<HTMLButtonAttributes, 'children'> & {
     options?: SelectOption[]
     value?: unknown
     label?: string
@@ -28,16 +28,14 @@
     placeholder = 'Select...',
     disabled = false,
     id,
-    optionClass = "",
-    optionStyle = "",
+    optionClass = '',
+    optionStyle = '',
     ...rest
   }: SelectProps = $props()
 
   let open = $state(false)
   let anchor = $state<HTMLElement | null>(null)
-  let selectedLabel = $derived(
-    options.find((opt) => opt.value === value)?.label
-  )
+  let selectedLabel = $derived(options.find((opt) => opt.value === value)?.label)
 
   function handleSelect(optValue: any) {
     value = optValue
@@ -63,26 +61,28 @@
     <span class:select-placeholder={!selectedLabel}>
       {selectedLabel ?? placeholder}
     </span>
-    
-    <svg 
-      width="16" 
-      height="16" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      stroke-width="2" 
-      stroke-linecap="round" 
+
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
       stroke-linejoin="round"
-      style="transform: rotate({open ? '180deg' : '0deg'}); transition: transform 0.2s;"
+      style="transform: rotate({open
+        ? '180deg'
+        : '0deg'}); transition: transform 0.2s; opacity: 0.5;"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
   </button>
 
-  <Dropdown 
-    {anchor} 
-    bind:open 
-    placement="bottom-start" 
+  <Dropdown
+    {anchor}
+    bind:open
+    placement="bottom-start"
     style="width: {anchor?.offsetWidth}px; box-sizing: border-box;"
   >
     <div class="select-options">

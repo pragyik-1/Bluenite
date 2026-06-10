@@ -3,12 +3,26 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "svelte-package",
     "preview": "vite preview"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/*.d.ts",
+      "svelte": "./dist/*.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
   "devDependencies": {
+    "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
     "svelte": "^5.55.5",
     "vite": "^8.0.12"

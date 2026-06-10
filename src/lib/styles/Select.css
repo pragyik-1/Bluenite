@@ -12,9 +12,9 @@
   text-align: left;
   cursor: pointer;
   background-color: var(--input);
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: var(--round-md);
-  padding: 7px 10px;
+  padding: 7px;
   color: inherit;
   font-family: inherit;
   transition: all 0.2s;
@@ -24,6 +24,10 @@
 .select-trigger[aria-expanded="true"] {
   border-color: var(--primary);
   outline: none;
+}
+
+.select-trigger:hover {
+    background-color: var(--input-focus);
 }
 
 .select-trigger:disabled {
@@ -41,6 +45,7 @@
   gap: 2px;
   margin: 0;
   padding: 0;
+  padding: 0.25rem;
 }
 
 .select-item {
@@ -51,7 +56,7 @@
   border: none;
   background: transparent;
   color: var(--primary-text);
-  border-radius: var(--round-sm);
+  border-radius: var(--round-md);
   font-family: inherit;
   font-size: 0.875rem;
   transition: background-color 0.1s, color 0.1s;

@@ -20,10 +20,6 @@
   }
 </script>
 
-<div
-  class="col-container"
-  style="--col-gap: {gap}rem; {alignStyles[align]}"
-  {...rest}
->
+<div class="col-container" style="--col-gap: {gap}rem; {alignStyles[align]}" {...rest}>
   {@render children?.()}
 </div>

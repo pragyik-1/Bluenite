@@ -1,26 +1,31 @@
 <script lang="ts">
   import Card from './Card.svelte'
   import type { CardProps } from './Card.svelte'
-  import "../styles/Modal.css"
-    import { fade } from 'svelte/transition'
+  import '../styles/Modal.css'
+  import { fade } from 'svelte/transition'
 
-  type ModalProps = CardProps & {
+  export type ModalProps = CardProps & {
     open?: boolean
     onClose?: () => void
   }
 
   let {
     open = $bindable(false),
-    onClose = () => {open = false},
+    onClose = () => (open = false),
     children,
     ...rest
   }: ModalProps = $props()
 </script>
 
 {#if open}
-  <div transition:fade={{duration: 150}} class="modal-backdrop" onclick={onClose} role="presentation">
+  <div
+    transition:fade={{ duration: 100 }}
+    class="modal-backdrop"
+    onclick={onClose}
+    role="presentation"
+  >
     <Card class="card-container-modal" {...rest}>
-        {@render children?.()}
+      {@render children?.()}
     </Card>
   </div>
 {/if}

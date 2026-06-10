@@ -2,10 +2,14 @@
   import type { HTMLInputAttributes } from 'svelte/elements'
   import '../styles/Input.css'
 
-  type InputProps = HTMLInputAttributes & { label?: string }
+  export type InputProps = HTMLInputAttributes & {
+    label?: string
+    ref?: HTMLInputElement | null
+  }
   let {
     value = $bindable(''),
     files = $bindable(),
+    ref = $bindable(null),
     label,
     id,
     ...rest
@@ -15,4 +19,4 @@
 {#if label}
   <label class="input-label" for={id}>{label}</label>
 {/if}
-<input class="input" {value} {id} {...rest} />
+<input class="input" bind:this={ref} {value} {id} {...rest} />
