@@ -3,7 +3,7 @@
     z-index: 9999;
     border: 1px solid var(--border);
     background-color: var(--surface);
-    border-radius: var(--round-md);
+    border-radius: var(--round-lg);
     box-shadow:
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);

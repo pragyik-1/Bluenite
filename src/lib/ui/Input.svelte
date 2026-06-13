@@ -19,4 +19,4 @@
 {#if label}
   <label class="input-label" for={id}>{label}</label>
 {/if}
-<input class="input" bind:this={ref} {value} {id} {...rest} />
+<input class="input" bind:this={ref} bind:value {id} {...rest} />
