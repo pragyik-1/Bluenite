@@ -18,6 +18,10 @@
     id?: string
     optionStyle?: string
     optionClass?: string
+    wrapperClass?: string
+    wrapperStyle?: string
+    style?: string
+    class?: string
   }
 
   let {
@@ -29,6 +33,9 @@
     id,
     optionClass = '',
     optionStyle = '',
+    wrapperClass = '',
+    wrapperStyle = '',
+    ...rest
   }: SelectProps = $props()
 
   let open = $state(false)
@@ -123,7 +130,7 @@
   })
 </script>
 
-<div class="select-wrapper">
+<div class="select-wrapper" class:wrapperClass style={wrapperStyle} {...rest}>
   {#if label}
     <label class="input-label" for={selectId}>{label}</label>
   {/if}
@@ -139,6 +146,7 @@
     aria-expanded={open}
     aria-haspopup="listbox"
     aria-controls={listboxId}
+    {...rest}
   >
     <span class:select-placeholder={!selectedLabel}>
       {selectedLabel ?? placeholder}

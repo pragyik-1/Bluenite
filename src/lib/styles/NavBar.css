@@ -24,8 +24,9 @@
 .navbar-inner {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     max-width: 1200px;
-    height: 64px;
+    height: var(--navbar-height, 64px);
     margin: 0 auto;
     padding: 0 1.5rem;
     width: 100%;
@@ -35,6 +36,7 @@
 .navbar-content {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -53,7 +55,7 @@
 }
 
 .navbar-page-spacer {
-  height: 64px;
+  height: var(--navbar-height, 64px);
   width: 100%;
   display: block;
   clear: both;
@@ -71,7 +73,7 @@
   .navbar-content {
     display: none;
     position: absolute;
-    top: 64px;
+    top: var(--navbar-height, 64px);
     left: 0;
     right: 0;
     background-color: var(--surface);

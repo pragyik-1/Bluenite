@@ -1,7 +1,7 @@
 {
-  "name": "bluenite",
-  "version": "0.1.0",
-  "description": "A dark-mode-first Svelte 5 UI component library.",
+  "name": "@hermitk/bluenite",
+  "version": "0.1.1",
+  "description": "A dark-mode-first Svelte 5 UI component library. Made as a personal utility",
   "license": "MIT",
   "type": "module",
   "types": "dist/index.d.ts",

@@ -7,6 +7,8 @@
     behavior?: 'static' | 'fixed' | 'hide-on-scroll'
     children?: Snippet
     disableSpacing?: boolean
+    height?: string
+    mobile?: boolean
   }
 
   let {
@@ -14,6 +16,8 @@
     class: customClass = '',
     style: customStyle = '',
     disableSpacing = false,
+    height = '64px',
+    mobile = true,
     children,
     ...rest
   }: NavbarProps = $props()
@@ -57,30 +61,34 @@
   class:behavior-static={behavior === 'static'}
   class:behavior-fixed={behavior === 'fixed' || behavior === 'hide-on-scroll'}
   class:is-hidden={isHidden}
-  style={customStyle}
+  style="--navbar-height: {height}; {customStyle}"
   {...rest}
 >
   <div class="navbar-inner">
-    <button
-      class="navbar-hamburger"
-      onclick={toggleMobile}
-      aria-expanded={mobileOpen}
-      aria-label="Toggle navigation"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        {#if mobileOpen}
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        {:else}
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        {/if}
-      </svg>
-    </button>
-    <div class="navbar-content" class:mobile-open={mobileOpen}>
+    {#if mobile}
+      <button
+        class="navbar-hamburger"
+        onclick={toggleMobile}
+        aria-expanded={mobileOpen}
+        aria-label="Toggle navigation"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          {#if mobileOpen}
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          {:else}
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          {/if}
+        </svg>
+      </button>
+      <div class="navbar-content" class:mobile-open={mobileOpen}>
+        {@render children?.()}
+      </div>
+    {:else}
       {@render children?.()}
-    </div>
+    {/if}
   </div>
 </nav>
 
