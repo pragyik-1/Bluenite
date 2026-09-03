@@ -14,7 +14,7 @@ html {
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--hoverAndBorder);
+    background-color: var(--secondary-text);
   }
 
   ::-webkit-scrollbar-track {
@@ -22,11 +22,6 @@ html {
     border-radius: 4px;
   }
 
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--surface);
-}
-
-* {
   scrollbar-width: thin;
   scrollbar-color: var(--border) var(--surface);
 }

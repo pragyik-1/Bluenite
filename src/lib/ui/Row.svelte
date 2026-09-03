@@ -12,7 +12,7 @@
   let { children, gap = 0, justify = 'start', ...rest }: RowProps = $props()
 
   const justifyStyles = {
-    start: 'justify-contnet: flex-start;',
+    start: 'justify-content: flex-start;',
     center: 'justify-content: center;',
     end: 'justify-content: flex-end;',
     between: 'justify-content: space-between;',

@@ -7,6 +7,7 @@
     title?: string
     subtitle?: string
     interactive?: boolean
+    noPadding?: boolean
     header?: Snippet
     children?: Snippet
     footer?: Snippet
@@ -16,6 +17,7 @@
     title,
     subtitle,
     interactive = false,
+    noPadding = false,
     header,
     children,
     footer,
@@ -27,6 +29,7 @@
 <div
   class="card {customClass}"
   class:interactive
+  class:no-padding={noPadding}
   {...rest}
 >
   {#if title || subtitle || header}

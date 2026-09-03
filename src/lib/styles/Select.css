@@ -63,6 +63,7 @@
 }
 
 .select-item:hover,
+.select-item.highlighted,
 .select-item:focus-visible {
   background-color: var(--surface-hover);
   outline: none;

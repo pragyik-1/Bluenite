@@ -1,3 +1,8 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .input {
     border: 1px solid var(--border);
     border-radius: var(--round-md);
@@ -17,6 +22,14 @@
 .input:focus {
     border-color: var(--primary);
     background-color: var(--input-focus);
+}
+
+.input.error {
+    border-color: var(--danger);
+}
+
+.input.error:focus {
+    border-color: var(--danger);
 }
 
 .input:disabled {
@@ -49,7 +62,18 @@
     filter: brightness(1.4);
 }
 
-/* Active/Focus states */
 .input[type="file"]:focus-visible {
     border-color: var(--primary);
+}
+
+.input-error {
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--danger);
+}
+
+.input-helper {
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--secondary-text);
 }

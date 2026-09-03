@@ -16,7 +16,7 @@
     checked = $bindable(false),
     label,
     size = 'md',
-    id = crypto.randomUUID(),
+    id = $bindable(''),
     class: _class = '',
     style = '',
     disabled = false,
@@ -27,6 +27,13 @@
   let heightPx = $derived(
     typeof size === 'number' ? size : size === 'sm' ? 20 : size === 'lg' ? 32 : 26,
   )
+
+  let switchId = $state(id || '')
+  $effect(() => {
+    if (!id && !switchId) {
+      switchId = 'switch-' + Math.random().toString(36).slice(2, 9)
+    }
+  })
 </script>
 
 <label
@@ -34,11 +41,11 @@
   class:checked
   class:disabled
   style="--switch-h: {heightPx}px; {style}"
-  for={id}
+  for={switchId}
 >
-  <input {id} type="checkbox" class="switch-input" {disabled} bind:checked {...rest} />
+  <input id={switchId} type="checkbox" class="switch-input" {disabled} bind:checked {...rest} />
 
-  <div class="switch-track">
+  <div class="switch-track" role="switch" aria-checked={checked} aria-hidden="true">
     <div class="switch-thumb"></div>
   </div>
 

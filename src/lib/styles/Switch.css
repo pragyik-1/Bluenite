@@ -77,17 +77,8 @@
 }
 
 .switch-input:focus-visible + .switch-track {
-  border-color: var(--primary);
-}
-
-.switch-container.checked .switch-track {
-  background: var(--primary);
-}
-
-.switch-container.checked .switch-thumb {
-  left: calc(
-    var(--track-w) - var(--thumb-s) - var(--padding-w)
-  );
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .switch-label {

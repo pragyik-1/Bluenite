@@ -9,6 +9,10 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
+.card.no-padding .card-content {
+  padding: 0;
+}
+
 /* Subtle interactive lift for general usability */
 .card.interactive {
   cursor: pointer;
@@ -53,7 +57,7 @@
 .card-footer {
   padding: 1rem 1.25rem;
   border-top: 1px solid var(--border);
-  background-color: color-mix(in srgb, var(--surface) 95%, white);
+  background-color: color-mix(in srgb, var(--surface) 95%, var(--bg));
   display: flex;
   align-items: center;
   justify-content: flex-end;

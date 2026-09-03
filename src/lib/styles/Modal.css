@@ -11,9 +11,27 @@
   z-index: 1000;
 }
 
+.modal-focus-trap {
+  outline: none;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
 .card-container-modal {
   max-width: 90vw;
   max-height: 90vh;
   overflow: auto;
   margin: 1rem;
+}
+
+.modal-sm {
+  width: 360px;
+}
+
+.modal-md {
+  width: 520px;
+}
+
+.modal-lg {
+  width: 720px;
 }

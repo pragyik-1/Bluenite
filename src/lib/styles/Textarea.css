@@ -1,3 +1,8 @@
+.textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .textarea {
   border-width: 1px;
   width: 100%;
@@ -8,11 +13,42 @@
   background-color: var(--input);
   outline: none;
   color: inherit;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
   padding: 7px;
 }
 
 .textarea:focus {
   background-color: var(--input-focus);
-  border-color: var(--primary)
+  border-color: var(--primary);
+}
+
+.textarea.error {
+  border-color: var(--danger);
+}
+
+.textarea.error:focus {
+  border-color: var(--danger);
+}
+
+.textarea:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
+
+.textarea-wrapper .input-label {
+  margin-bottom: 5px;
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+.textarea-error {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--danger);
+}
+
+.textarea-helper {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--secondary-text);
 }

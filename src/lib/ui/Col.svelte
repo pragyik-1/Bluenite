@@ -3,7 +3,7 @@
   import '../styles/Col.css'
   import type { HTMLAttributes } from 'svelte/elements'
 
-  type ColProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+  export type ColProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
     children?: Snippet
     gap?: number
     align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'

@@ -18,7 +18,7 @@
     open = $bindable(false),
     children,
     placement = 'bottom',
-    onClose = () => (open = !open),
+    onClose = () => (open = false),
     ...rest
   }: DropDownProps = $props()
 

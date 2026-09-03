@@ -1,13 +1,14 @@
+const isBrowser = typeof window !== 'undefined'
+
 function getInitialTheme(): string {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    return prefersDark ? 'dark' : 'light'
+  if (!isBrowser) return 'dark'
+  const stored = localStorage.getItem('bluenite-theme')
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
-export const theme = $state({
-  value: getInitialTheme()
-})
-
-const updateTheme = (value: string): void => {
+function applyTheme(value: string): void {
+  if (!isBrowser) return
   if (value === 'light') {
     document.documentElement.classList.add('light')
     document.documentElement.classList.remove('dark')
@@ -15,11 +16,16 @@ const updateTheme = (value: string): void => {
     document.documentElement.classList.remove('light')
     document.documentElement.classList.add('dark')
   }
+  localStorage.setItem('bluenite-theme', value)
 }
+
+export const theme = $state({
+  value: getInitialTheme()
+})
 
 export const toggleTheme = (): void => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
-  updateTheme(theme.value)
+  applyTheme(theme.value)
 }
 
-updateTheme(theme.value)
+applyTheme(theme.value)

@@ -19,7 +19,6 @@
   let dropdownOpen = $state(false)
   let modalOpen = $state(false)
   let val = $state(null)
-  $inspect(dropdownOpen)
 </script>
 
 <NavBar behavior="hide-on-scroll">

@@ -1,15 +1,41 @@
 {
   "name": "bluenite",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "A dark-mode-first Svelte 5 UI component library.",
+  "license": "MIT",
   "type": "module",
+  "types": "dist/index.d.ts",
+  "author": "Pragyik Dahal",
   "files": [
     "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "svelte",
+    "svelte5",
+    "ui",
+    "components",
+    "dark-mode",
+    "design-system",
+    "runes"
   ],
   "scripts": {
     "dev": "vite",
     "build": "svelte-package",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pragyik-1/Bluenite.git"
   },
   "exports": {
     ".": {
@@ -22,10 +48,25 @@
     "svelte": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@sveltejs/package": "^2.5.8",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/svelte": "^5.4.2",
+    "@typescript-eslint/eslint-plugin": "^8.69.0",
+    "@typescript-eslint/parser": "^8.69.0",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-svelte": "^3.23.0",
+    "jsdom": "^30.0.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-svelte": "^4.1.1",
     "svelte": "^5.55.5",
-    "vite": "^8.0.12"
+    "svelte-check": "^4.7.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0",
+    "vite": "^8.0.12",
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.6"
