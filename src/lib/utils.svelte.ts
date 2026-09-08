@@ -21,6 +21,7 @@ interface AnchorOptions {
     anchorElement: HTMLElement | null;
     placement?: 'top' | 'bottom' | 'left' | 'right' | 'bottom-start' | 'bottom-end';
     offsetDistance?: number;
+    matchAnchorWidth?: boolean;
 }
 
 export function floatingAnchor(
@@ -34,19 +35,25 @@ export function floatingAnchor(
 
         computePosition(options.anchorElement, node, {
             placement: options.placement || 'bottom-start',
-            middleware: [
-                offset(options.offsetDistance ?? 8),
-                flip(),
-                shift({ padding: 8 }),
-                size({
-                    apply({ rects }) {
-                        Object.assign(node.style, {
-                            width: `${rects.reference.width}px`,
-                            boxSizing: 'border-box'
-                        });
-                    }
-                })
-            ]
+            middleware: options.matchAnchorWidth !== false
+                ? [
+                    offset(options.offsetDistance ?? 8),
+                    flip(),
+                    shift({ padding: 8 }),
+                    size({
+                        apply({ rects }) {
+                            Object.assign(node.style, {
+                                width: `${rects.reference.width}px`,
+                                boxSizing: 'border-box'
+                            });
+                        }
+                    })
+                ]
+                : [
+                    offset(options.offsetDistance ?? 8),
+                    flip(),
+                    shift({ padding: 8 }),
+                ]
         }).then(({ x, y }) => {
             Object.assign(node.style, {
                 left: `${x}px`,

@@ -35,7 +35,7 @@
 
 <Button onclick={() => (dropdownOpen = !dropdownOpen)} bind:ref={buttonRef}>Dropdown</Button>
 
-<Dropdown bind:open={dropdownOpen} anchor={buttonRef}>Hello</Dropdown>
+<Dropdown class="" bind:open={dropdownOpen} anchor={buttonRef}>Hello</Dropdown>
 
 <Input type="file" />
 <Input />

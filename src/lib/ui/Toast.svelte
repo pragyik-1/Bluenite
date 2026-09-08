@@ -1,21 +1,24 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import { fade } from 'svelte/transition'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/Toast.css'
   import type { HTMLAttributes } from 'svelte/elements'
   import { clickOutside } from '../utils.svelte'
 
   export type ToastVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
 
-  export type ToastProps = HTMLAttributes<HTMLDivElement> & {
-    message?: string
-    description?: string
-    variant?: ToastVariant
-    duration?: number
-    onClose?: () => void
-    children?: Snippet
-    icon?: Snippet
-  }
+  export type ToastProps = HTMLAttributes<HTMLDivElement> &
+    BlueniteProps & {
+      message?: string
+      description?: string
+      variant?: ToastVariant
+      duration?: number
+      onClose?: () => void
+      children?: Snippet
+      icon?: Snippet
+    }
 
   let {
     message,
@@ -25,13 +28,18 @@
     icon,
     onClose,
     children,
+    class: _class,
+    overrideClasses,
   }: ToastProps = $props()
 
-  let remaining = $state(duration)
+  let className = $derived(cn(overrideClasses, _class, 'toast'))
+
+  let remaining = $state<number>(0)
   let startTime = $state(0)
   let timer = $state<ReturnType<typeof setTimeout> | null>(null)
 
   function startTimer() {
+    remaining = duration
     startTime = Date.now()
     timer = setTimeout(() => {
       onClose?.()
@@ -43,6 +51,7 @@
       clearTimeout(timer)
       timer = null
     }
+    
     remaining -= Date.now() - startTime
   }
 
@@ -63,7 +72,7 @@
 </script>
 
 <div
-  class="toast"
+  class={className}
   style="--variant-color: var(--{variant});"
   transition:fade={{ duration: 150 }}
   role="status"

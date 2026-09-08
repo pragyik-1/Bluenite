@@ -1,5 +1,7 @@
 <script lang="ts">
   import Dropdown from './Dropdown.svelte'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/Select.css'
   import '../styles/Input.css'
 
@@ -9,7 +11,7 @@
     [key: string]: unknown
   }
 
-  export type SelectProps = {
+  export type SelectProps = BlueniteProps & {
     options?: SelectOption[]
     value?: unknown
     label?: string
@@ -35,8 +37,12 @@
     optionStyle = '',
     wrapperClass = '',
     wrapperStyle = '',
+    class: _class,
+    overrideClasses,
     ...rest
   }: SelectProps = $props()
+
+  let wrapperClassName = $derived(cn(overrideClasses, _class, 'select-wrapper', wrapperClass))
 
   let open = $state(false)
   let anchor = $state<HTMLElement | null>(null)
@@ -130,7 +136,7 @@
   })
 </script>
 
-<div class="select-wrapper" class:wrapperClass style={wrapperStyle} {...rest}>
+<div class={wrapperClassName} style={wrapperStyle} {...rest}>
   {#if label}
     <label class="input-label" for={selectId}>{label}</label>
   {/if}
@@ -146,7 +152,6 @@
     aria-expanded={open}
     aria-haspopup="listbox"
     aria-controls={listboxId}
-    {...rest}
   >
     <span class:select-placeholder={!selectedLabel}>
       {selectedLabel ?? placeholder}

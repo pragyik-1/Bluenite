@@ -1,23 +1,27 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import type { HTMLInputAttributes } from 'svelte/elements'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/Switch.css'
 
-  export type SwitchProps = Omit<HTMLInputAttributes, 'type' | 'checked' | 'children' | 'size'> & {
-    checked?: boolean
-    label?: string
-    size?: 'sm' | 'md' | 'lg' | number
-    class?: string
-    style?: string
-    children?: Snippet
-  }
+  export type SwitchProps = Omit<HTMLInputAttributes, 'type' | 'checked' | 'children' | 'size'> &
+    BlueniteProps & {
+      checked?: boolean
+      label?: string
+      size?: 'sm' | 'md' | 'lg' | number
+      class?: string
+      style?: string
+      children?: Snippet
+    }
 
   let {
     checked = $bindable(false),
     label,
     size = 'md',
     id = $bindable(''),
-    class: _class = '',
+    class: _class,
+    overrideClasses,
     style = '',
     disabled = false,
     children,
@@ -28,6 +32,8 @@
     typeof size === 'number' ? size : size === 'sm' ? 20 : size === 'lg' ? 32 : 26,
   )
 
+  let className = $derived(cn(overrideClasses, _class, 'switch-container'))
+
   let switchId = $state(id || '')
   $effect(() => {
     if (!id && !switchId) {
@@ -37,7 +43,7 @@
 </script>
 
 <label
-  class="switch-container {_class}"
+  class={className}
   class:checked
   class:disabled
   style="--switch-h: {heightPx}px; {style}"

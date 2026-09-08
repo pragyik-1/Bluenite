@@ -1,17 +1,20 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/Card.css'
 
-  export type CardProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
-    title?: string
-    subtitle?: string
-    interactive?: boolean
-    noPadding?: boolean
-    header?: Snippet
-    children?: Snippet
-    footer?: Snippet
-  }
+  export type CardProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> &
+    BlueniteProps & {
+      title?: string
+      subtitle?: string
+      interactive?: boolean
+      noPadding?: boolean
+      header?: Snippet
+      children?: Snippet
+      footer?: Snippet
+    }
 
   let {
     title,
@@ -21,13 +24,16 @@
     header,
     children,
     footer,
-    class: customClass = '',
+    class: _class,
+    overrideClasses,
     ...rest
   }: CardProps = $props()
+
+  let className = $derived(cn(overrideClasses, _class, 'card'))
 </script>
 
 <div
-  class="card {customClass}"
+  class={className}
   class:interactive
   class:no-padding={noPadding}
   {...rest}

@@ -2,7 +2,7 @@ const isBrowser = typeof window !== 'undefined'
 
 function getInitialTheme(): string {
   if (!isBrowser) return 'dark'
-  const stored = localStorage.getItem('bluenite-theme')
+  const stored = localStorage?.getItem('bluenite-theme')
   if (stored === 'light' || stored === 'dark') return stored
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -16,7 +16,7 @@ function applyTheme(value: string): void {
     document.documentElement.classList.remove('light')
     document.documentElement.classList.add('dark')
   }
-  localStorage.setItem('bluenite-theme', value)
+  localStorage?.setItem('bluenite-theme', value)
 }
 
 export const theme = $state({

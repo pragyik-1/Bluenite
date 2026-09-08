@@ -1,19 +1,23 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/NavBar.css'
 
-  export type NavbarProps = HTMLAttributes<HTMLElement> & {
-    behavior?: 'static' | 'fixed' | 'hide-on-scroll'
-    children?: Snippet
-    disableSpacing?: boolean
-    height?: string
-    mobile?: boolean
-  }
+  export type NavbarProps = HTMLAttributes<HTMLElement> &
+    BlueniteProps & {
+      behavior?: 'static' | 'fixed' | 'hide-on-scroll'
+      children?: Snippet
+      disableSpacing?: boolean
+      height?: string
+      mobile?: boolean
+    }
 
   let {
     behavior = 'fixed',
-    class: customClass = '',
+    class: _class,
+    overrideClasses,
     style: customStyle = '',
     disableSpacing = false,
     height = '64px',
@@ -21,6 +25,8 @@
     children,
     ...rest
   }: NavbarProps = $props()
+
+  let className = $derived(cn(overrideClasses, _class, 'navbar-container'))
 
   let isHidden = $state(false)
   let mobileOpen = $state(false)
@@ -57,7 +63,7 @@
 </script>
 
 <nav
-  class="navbar-container {customClass}"
+  class={className}
   class:behavior-static={behavior === 'static'}
   class:behavior-fixed={behavior === 'fixed' || behavior === 'hide-on-scroll'}
   class:is-hidden={isHidden}

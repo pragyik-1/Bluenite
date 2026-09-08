@@ -1,6 +1,7 @@
 <script lang="ts">
   import Card from './Card.svelte'
   import type { CardProps } from './Card.svelte'
+  import { cn } from '../cn'
   import '../styles/Modal.css'
   import { fade } from 'svelte/transition'
   import { tick } from 'svelte'
@@ -18,9 +19,12 @@
     children,
     title,
     size = 'md',
+    class: _class,
+    overrideClasses,
     ...rest
   }: ModalProps = $props()
 
+  let modalClassName = $derived(cn(overrideClasses, _class, 'card-container-modal', `modal-${size}`))
   let modalNode = $state<HTMLElement | null>(null)
   let previousFocus = $state<HTMLElement | null>(null)
 
@@ -81,7 +85,7 @@
       onclick={(e) => e.stopPropagation()}
       onkeydown={(e) => e.stopPropagation()}
     >
-      <Card class="card-container-modal modal-{size}" {title} {...rest}>
+      <Card class={modalClassName} {title} {...rest}>
         {@render children?.()}
       </Card>
     </div>

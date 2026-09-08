@@ -1,17 +1,20 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import type { HTMLButtonAttributes } from 'svelte/elements'
+  import { cn } from '../cn'
+  import type { BlueniteProps } from '../types'
   import '../styles/Button.css'
 
-  export type ButtonProps = Omit<HTMLButtonAttributes, 'children'> & {
-    variant?: 'fill' | 'outline' | 'ghost'
-    children?: Snippet
-    color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
-    size?: 'sm' | 'md' | 'lg'
-    loading?: boolean
-    icon?: Snippet
-    ref?: HTMLButtonElement | null
-  }
+  export type ButtonProps = Omit<HTMLButtonAttributes, 'children'> &
+    BlueniteProps & {
+      variant?: 'fill' | 'outline' | 'ghost'
+      children?: Snippet
+      color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
+      size?: 'sm' | 'md' | 'lg'
+      loading?: boolean
+      icon?: Snippet
+      ref?: HTMLButtonElement | null
+    }
 
   let {
     variant = 'fill',
@@ -22,14 +25,18 @@
     ref = $bindable(null),
     children,
     disabled,
+    class: _class,
+    overrideClasses,
     ...rest
   }: ButtonProps = $props()
+
+  let className = $derived(cn(overrideClasses, _class, 'button', variant, size))
 </script>
 
 <button
   style="--btn-color: var(--{color}); --btn-hover: var(--{color}-hover); 
     --btn-text: {variant === 'ghost' ? 'var(--btn-color)' : 'var(--primary-text)'};"
-  class="button {variant} {size}"
+  class={className}
   bind:this={ref}
   disabled={disabled || loading}
   aria-busy={loading}

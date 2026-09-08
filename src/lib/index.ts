@@ -13,6 +13,8 @@ export { default as Card } from './ui/Card.svelte'
 
 export { toast, type ToastItem, type ToastVariant } from './toast.svelte'
 export { theme, toggleTheme } from './theme.svelte'
+export { cn } from './cn'
+export type { BlueniteProps } from './types'
 
 export type { ButtonProps } from './ui/Button.svelte'
 export type { CardProps } from './ui/Card.svelte'
