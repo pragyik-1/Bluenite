@@ -16,7 +16,7 @@ A dark-mode-first UI component library for [Svelte 5](https://svelte.dev), built
 ## Installation
 
 ```bash
-npm install bluenite
+npm install @hermitk/bluenite
 ```
 
 Requires `svelte@^5.0.0` as a peer dependency.
