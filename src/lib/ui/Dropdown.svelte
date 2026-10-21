@@ -22,7 +22,7 @@
     open = $bindable(false),
     children,
     placement = 'bottom',
-    onClose = () => (open = false),
+    onClose = () => {},
     matchAnchorWidth = true,
     class: _class,
     overrideClasses,
@@ -32,20 +32,25 @@
   let className = $derived(cn(overrideClasses, _class, 'dropdown'))
   let dropdownNode = $state<HTMLElement | null>(null)
 
+  function close() {
+    open = false
+    onClose?.()
+  }
+
   $effect(() => {
     if (!open) return
 
-    const handleWindowClick = (event: MouseEvent) => {
-      const target = event.target as Node
-      const clickedInsideDropdown = dropdownNode?.contains(target)
-      const clickedInsideAnchor = anchor?.contains(target)
+    const handlePointerDown = (event: PointerEvent) => {
+      const path = event.composedPath()
+      const clickedInsideDropdown = dropdownNode && path.includes(dropdownNode)
+      const clickedInsideAnchor = anchor && path.includes(anchor)
       if (!clickedInsideDropdown && !clickedInsideAnchor) {
-        onClose()
+        close()
       }
     }
-    document.addEventListener('click', handleWindowClick)
+    document.addEventListener('pointerdown', handlePointerDown)
     return () => {
-      document.removeEventListener('click', handleWindowClick)
+      document.removeEventListener('pointerdown', handlePointerDown)
     }
   })
 </script>

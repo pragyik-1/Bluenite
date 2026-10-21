@@ -25,11 +25,13 @@
     ...rest
   }: InputProps = $props()
 
-  let inputId = $derived(id || 'input-' + Math.random().toString(36).slice(2, 9))
-  let inputClassName = $derived(cn(overrideClasses, _class, 'input'))
+  let generatedId = $props.id()
+  let inputId = $derived(id ?? `input-${generatedId}`)
+  let inputClassName = $derived(cn(overrideClasses, _class, 'input', error ? 'error' : undefined))
+  let wrapperClassName = $derived(cn(overrideClasses, wrapperClass, 'input-wrapper'))
 </script>
 
-<div class="input-wrapper {wrapperClass}">
+<div class={wrapperClassName}>
   {#if label}
     <label class="input-label" for={inputId}>{label}</label>
   {/if}

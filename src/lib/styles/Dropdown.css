@@ -1,10 +1,23 @@
 .dropdown {
-    position: absolute;
-    z-index: 9999;
-    border: 1px solid var(--border);
-    background-color: var(--surface);
-    border-radius: var(--round-lg);
-    box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  z-index: var(--z-popover, 1000);
+  min-width: 8rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--round-md);
+  box-shadow: var(--shadow-popover);
+  overflow: hidden;
+  outline: none;
+}
+
+.dropdown:focus-visible {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-popover), 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown {
+    transition: none !important;
+    animation: none !important;
+  }
 }

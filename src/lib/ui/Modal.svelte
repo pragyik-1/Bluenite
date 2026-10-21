@@ -15,7 +15,7 @@
 
   let {
     open = $bindable(false),
-    onClose = () => (open = false),
+    onClose,
     children,
     title,
     size = 'md',
@@ -24,44 +24,68 @@
     ...rest
   }: ModalProps = $props()
 
-  let modalClassName = $derived(cn(overrideClasses, _class, 'card-container-modal', `modal-${size}`))
+  let modalClassName = $derived(
+    cn(overrideClasses, _class, 'card-container-modal', `modal-${size}`)
+  )
   let modalNode = $state<HTMLElement | null>(null)
   let previousFocus = $state<HTMLElement | null>(null)
 
-  function handleKeydown(e: KeyboardEvent) {
+  function close() {
+    open = false
+    onClose?.()
+  }
+
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+  function handleGlobalKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape') {
-      onClose()
+      e.stopPropagation()
+      close()
       return
     }
-    if (e.key === 'Tab' && modalNode) {
-      const focusable = modalNode.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      )
-      if (focusable.length === 0) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
+    if (e.key !== 'Tab' || !modalNode) return
+
+    const focusable = modalNode.querySelectorAll<HTMLElement>(FOCUSABLE)
+    if (focusable.length === 0) {
+      e.preventDefault()
+      return
+    }
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    const active = document.activeElement
+
+    if (e.shiftKey) {
+      if (active === first || !modalNode.contains(active)) {
+        e.preventDefault()
+        last.focus()
+      }
+    } else {
+      if (active === last || !modalNode.contains(active)) {
+        e.preventDefault()
+        first.focus()
       }
     }
   }
 
   $effect(() => {
-    if (open) {
-      previousFocus = document.activeElement as HTMLElement
-      tick().then(() => {
-        modalNode?.focus()
-      })
-    } else if (previousFocus) {
-      previousFocus.focus()
+    if (!open) return
+
+    previousFocus = document.activeElement as HTMLElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleGlobalKeydown)
+
+    tick().then(() => {
+      modalNode?.focus()
+    })
+
+    return () => {
+      document.removeEventListener('keydown', handleGlobalKeydown)
+      document.body.style.overflow = previousOverflow
+      if (previousFocus && document.contains(previousFocus)) {
+        previousFocus.focus()
+      }
       previousFocus = null
     }
   })
@@ -69,10 +93,9 @@
 
 {#if open}
   <div
-    transition:fade={{ duration: 100 }}
+    transition:fade={{ duration: 120 }}
     class="modal-backdrop"
-    onclick={onClose}
-    onkeydown={handleKeydown}
+    onclick={close}
     role="presentation"
   >
     <div
@@ -82,8 +105,6 @@
       aria-modal="true"
       aria-label={title}
       class="modal-focus-trap"
-      onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
     >
       <Card class={modalClassName} {title} {...rest}>
         {@render children?.()}
