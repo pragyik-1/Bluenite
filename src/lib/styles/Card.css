@@ -1,65 +1,68 @@
 .card {
+  display: flex;
+  flex-direction: column;
   background-color: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--round-lg);
   color: var(--primary-text);
+  overflow: hidden;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.card-header {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border);
 }
 
-.card.no-padding .card-content {
-  padding: 0;
+.card-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--primary-text);
 }
 
-/* Subtle interactive lift for general usability */
+.card-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--secondary-text);
+}
+
+.card-content {
+  flex: 1;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--primary-text);
+}
+
+.card:not(.no-padding) .card-content {
+  padding: var(--space-5);
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
 .card.interactive {
   cursor: pointer;
 }
 
 .card.interactive:hover {
-  border-color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
   background-color: var(--surface-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
 }
 
-.card-header {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0;
-  color: var(--primary-text);
-}
-
-.card-subtitle {
-  font-size: 0.875rem;
-  color: var(--secondary-text);
-  margin: 0;
-}
-
-.card-content {
-  padding: 1.25rem;
-  flex: 1;
-  font-size: 0.95rem;
-  color: var(--secondary-text);
-  line-height: 1.5;
-}
-
-.card-footer {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid var(--border);
-  background-color: color-mix(in srgb, var(--surface) 95%, var(--bg));
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
+.card.interactive:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
 }

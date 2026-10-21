@@ -30,12 +30,15 @@
     ...rest
   }: ButtonProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'button', variant, size))
+  let className = $derived(cn(overrideClasses, _class, 'button', variant, size, color))
 </script>
 
 <button
-  style="--btn-color: var(--{color}); --btn-hover: var(--{color}-hover); 
-    --btn-text: {variant === 'ghost' ? 'var(--btn-color)' : 'var(--primary-text)'};"
+  style="
+    --btn-color: var(--{color});
+    --btn-hover: var(--{color}-hover);
+    --btn-text: {variant === 'ghost' ? 'var(--btn-color)' : 'var(--primary-text)'};
+  "
   class={className}
   bind:this={ref}
   disabled={disabled || loading}

@@ -27,87 +27,95 @@ html {
 }
 
 :root {
-  --bg: rgb(13, 14, 20);
-  --text: rgb(255, 255, 255);
+  --bg: rgb(11, 12, 20);         
+  --surface: rgb(20, 22, 34);    
+  --surface-hover: rgb(28, 31, 46);
+  --border: rgb(45, 50, 72);  
 
-  --input: rgb(31, 34, 45);
-  --input-focus: rgb(40, 44, 58);
+  --input: rgb(26, 29, 44);
+  --input-focus: rgb(36, 40, 60);
 
-  --primary: rgb(99, 102, 241);
-  --primary-hover: rgb(79, 70, 229);
+  --text: rgb(245, 246, 252);       
+  --primary-text: rgb(245, 246, 252);
+  --secondary-text: rgb(170, 175, 192);
+  --muted-text: rgb(120, 127, 148);
 
-  --surface: rgb(21, 23, 32);
-  --surface-hover: rgb(27, 30, 42);
+  --primary: rgb(115, 118, 255);   
+  --primary-hover: rgb(95, 98, 250);
 
-  --border: rgb(36, 40, 53);
+  --secondary: rgb(155, 110, 255);   
+  --secondary-hover: rgb(135, 90, 245);
 
-  --primary-text: rgb(242, 244, 248);
-  --secondary-text: rgb(158, 163, 176);
-  --muted-text: rgb(100, 109, 124);
+  --danger: rgb(255, 85, 95);    
+  --danger-hover: rgb(235, 70, 80);
 
-  --danger: rgb(255, 94, 94);
-  --danger-hover: rgb(235, 79, 79);
+  --success: rgb(30, 210, 145);       
+  --success-hover: rgb(15, 190, 125);
 
-  --secondary: rgb(140, 94, 255);
-  --secondary-hover: rgb(122, 80, 230);
+  --warn: rgb(255, 180, 50);         
+  --warn-hover: rgb(235, 160, 35);
 
-  --info: rgb(60, 194, 255);
-  --info-hover: rgb(28, 176, 246);
-
-  --success: rgb(16, 185, 129);
-  --success-hover: rgb(5, 150, 105);
-
-  --warn: rgb(255, 173, 51);
-  --warn-hover: rgb(230, 154, 45);
+  --info: rgb(70, 200, 255);           
+  --info-hover: rgb(40, 180, 240);
 
   --control: rgb(255, 255, 255);
-  --control-bg: rgb(48, 53, 69);
+  --control-bg: rgb(45, 50, 72);
 
   --round-sm: 0.25rem;
   --round-md: 0.5rem;
   --round-lg: 0.8rem;
   --round-xl: 1.25rem;
 
+  --space-0: 0;
+  --space-1: 0.25rem; 
+  --space-2: 0.5rem;  
+  --space-3: 0.75rem; 
+  --space-4: 1rem;     
+  --space-5: 1.25rem;  
+  --space-6: 1.5rem;  
+  --space-8: 2rem;   
+  --space-10: 2.5rem;  
+  --space-12: 3rem;   
+  --space-16: 4rem;    
+
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', monospace;
 }
 
 html.light {
-  --bg: rgb(243, 246, 252);
-
+  --bg: rgb(245, 246, 252);
   --surface: rgb(255, 255, 255);
-  --surface-hover: rgb(246, 248, 253);
+  --surface-hover: rgb(244, 246, 253);
+  --border: rgb(214, 220, 235);
 
   --input: rgb(250, 251, 255);
   --input-focus: rgb(243, 246, 252);
 
-  --border: rgb(216, 223, 235);
+  --text: rgb(22, 26, 38);
+  --primary-text: rgb(22, 26, 38);
+  --secondary-text: rgb(85, 95, 118);
+  --muted-text: rgb(118, 128, 150);
 
-  --text: rgb(0, 0, 0);
-  --primary-text: rgb(28, 33, 45);
-  --secondary-text: rgb(84, 94, 112);
-  --muted-text: rgb(115, 125, 145);
+  --primary: rgb(88, 91, 235);         
+  --primary-hover: rgb(72, 74, 218);
 
-  --primary: rgb(99, 102, 241);
-  --primary-hover: rgb(79, 70, 229);
+  --secondary: rgb(130, 82, 250);     
+  --secondary-hover: rgb(112, 66, 232);
 
-  --secondary: rgb(140, 94, 255);
-  --secondary-hover: rgb(122, 80, 230);
+  --danger: rgb(240, 65, 75);         
+  --danger-hover: rgb(220, 50, 60);
 
-  --info: rgb(60, 194, 255);
-  --info-hover: rgb(28, 176, 246);
+  --success: rgb(15, 165, 110);     
+  --success-hover: rgb(10, 145, 95);
 
-  --success: rgb(16, 185, 129);
-  --success-hover: rgb(5, 150, 105);
+  --warn: rgb(245, 160, 25);       
+  --warn-hover: rgb(225, 140, 15);
 
-  --warn: rgb(255, 173, 51);
-  --warn-hover: rgb(230, 154, 45);
-
-  --danger: rgb(255, 94, 94);
-  --danger-hover: rgb(235, 79, 79);
+  --info: rgb(30, 175, 235);       
+  --info-hover: rgb(15, 155, 215);
 
   --control: rgb(255, 255, 255);
-  --control-bg: rgb(203, 213, 225);
+  --control-bg: rgb(200, 208, 225);
 }
 
 body {

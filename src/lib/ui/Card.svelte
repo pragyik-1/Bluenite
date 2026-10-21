@@ -26,16 +26,38 @@
     footer,
     class: _class,
     overrideClasses,
+    onclick,
+    onkeydown,
     ...rest
   }: CardProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'card'))
+  let className = $derived(
+    cn(overrideClasses, _class, 'card', {
+      interactive,
+      'no-padding': noPadding
+    })
+  )
+
+  let a11yAttrs = $derived(
+    interactive
+      ? { role: 'button' as const, tabindex: 0 }
+      : {}
+  )
+
+  function handleKeydown(event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement }) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      event.currentTarget.click()
+    }
+    onkeydown?.(event)
+  }
 </script>
 
 <div
   class={className}
-  class:interactive
-  class:no-padding={noPadding}
+  {...a11yAttrs}
+  onclick={onclick}
+  onkeydown={interactive ? handleKeydown : onkeydown}
   {...rest}
 >
   {#if title || subtitle || header}
