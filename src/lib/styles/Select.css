@@ -21,13 +21,13 @@
 }
 
 .select-trigger:focus-visible,
-.select-trigger[aria-expanded="true"] {
+.select-trigger[aria-expanded='true'] {
   border-color: var(--primary);
   outline: none;
 }
 
 .select-trigger:hover {
-    background-color: var(--input-focus);
+  background-color: var(--input-focus);
 }
 
 .select-trigger:disabled {
@@ -59,7 +59,9 @@
   border-radius: var(--round-md);
   font-family: inherit;
   font-size: 0.875rem;
-  transition: background-color 0.1s, color 0.1s;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 }
 
 .select-item:hover,

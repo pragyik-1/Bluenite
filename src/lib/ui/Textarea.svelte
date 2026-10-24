@@ -42,9 +42,12 @@
     id={textareaId}
     {disabled}
     aria-invalid={!!error}
-    aria-describedby={error ? `${textareaId}-error` : helperText ? `${textareaId}-helper` : undefined}
-    {...rest}
-  ></textarea>
+    aria-describedby={error
+      ? `${textareaId}-error`
+      : helperText
+        ? `${textareaId}-helper`
+        : undefined}
+    {...rest}></textarea>
   {#if error}
     <span class="textarea-error" id="{textareaId}-error">{error}</span>
   {:else if helperText}

@@ -20,7 +20,7 @@ function applyTheme(value: string): void {
 }
 
 export const theme = $state({
-  value: getInitialTheme()
+  value: getInitialTheme(),
 })
 
 export const toggleTheme = (): void => {

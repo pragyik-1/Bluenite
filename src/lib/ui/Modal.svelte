@@ -25,7 +25,7 @@
   }: ModalProps = $props()
 
   let modalClassName = $derived(
-    cn(overrideClasses, _class, 'card-container-modal', `modal-${size}`)
+    cn(overrideClasses, _class, 'card-container-modal', `modal-${size}`),
   )
   let modalNode = $state<HTMLElement | null>(null)
   let previousFocus = $state<HTMLElement | null>(null)

@@ -25,5 +25,5 @@ export const toast = {
 
   dismiss(id: string) {
     toasts = toasts.filter((t) => t.id !== id)
-  }
+  },
 }

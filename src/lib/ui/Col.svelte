@@ -12,7 +12,14 @@
       align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
     }
 
-  let { children, gap = 0, align = 'start', class: _class, overrideClasses, ...rest }: ColProps = $props()
+  let {
+    children,
+    gap = 0,
+    align = 'start',
+    class: _class,
+    overrideClasses,
+    ...rest
+  }: ColProps = $props()
 
   let className = $derived(cn(overrideClasses, _class, 'col-container'))
 

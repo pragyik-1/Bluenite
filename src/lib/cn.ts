@@ -8,7 +8,11 @@ function flatten(values: ClassArg[]): string {
     .join(' ')
 }
 
-export function cn(override: boolean | undefined, userClass: ClassArg, ...internalClasses: ClassArg[]): string {
+export function cn(
+  override: boolean | undefined,
+  userClass: ClassArg,
+  ...internalClasses: ClassArg[]
+): string {
   const internal = flatten(internalClasses)
   const user = flatten([userClass])
   if (override) return user

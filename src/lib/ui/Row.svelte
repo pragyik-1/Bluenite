@@ -12,7 +12,14 @@
       justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
     }
 
-  let { children, gap = 0, justify = 'start', class: _class, overrideClasses, ...rest }: RowProps = $props()
+  let {
+    children,
+    gap = 0,
+    justify = 'start',
+    class: _class,
+    overrideClasses,
+    ...rest
+  }: RowProps = $props()
 
   let className = $derived(cn(overrideClasses, _class, 'row-container'))
 

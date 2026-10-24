@@ -16,7 +16,7 @@ endOfLine: "lf"
 embeddedLanguageFormatting: "auto"
 quoteProps: "as-needed"
 
-svelteSortOrder: "scripts-styles-markup"
+svelteSortOrder: "options-scripts-markup-styles"
 svelteAllowShorthand: true
 svelteIndentScriptAndStyle: true
 

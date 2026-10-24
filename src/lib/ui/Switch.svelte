@@ -29,7 +29,7 @@
   }: SwitchProps = $props()
 
   let heightPx = $derived(
-    typeof size === 'number' ? size : size === 'sm' ? 20 : size === 'lg' ? 32 : 26
+    typeof size === 'number' ? size : size === 'sm' ? 20 : size === 'lg' ? 32 : 26,
   )
 
   let className = $derived(cn(overrideClasses, _class, 'switch-container'))
@@ -38,12 +38,7 @@
   let switchId = $derived(id ?? `switch-${generatedId}`)
 </script>
 
-<label
-  class={className}
-  class:disabled
-  style="--switch-h: {heightPx}px; {style}"
-  for={switchId}
->
+<label class={className} class:disabled style="--switch-h: {heightPx}px; {style}" for={switchId}>
   <input
     id={switchId}
     type="checkbox"

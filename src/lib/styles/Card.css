@@ -6,7 +6,9 @@
   border-radius: var(--round-lg);
   color: var(--primary-text);
   overflow: hidden;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .card-header {
@@ -64,5 +66,7 @@
 .card.interactive:focus-visible {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--primary);
 }

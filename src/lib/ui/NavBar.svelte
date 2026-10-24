@@ -29,7 +29,7 @@
   }: NavbarProps = $props()
 
   let className = $derived(
-    cn(overrideClasses, _class, 'navbar-container', mobile ? 'has-mobile' : undefined)
+    cn(overrideClasses, _class, 'navbar-container', mobile ? 'has-mobile' : undefined),
   )
 
   let generatedId = $props.id()
@@ -119,11 +119,7 @@
           {/if}
         </svg>
       </button>
-      <div
-        id={mobileMenuId}
-        class="navbar-content"
-        class:mobile-open={mobileOpen}
-      >
+      <div id={mobileMenuId} class="navbar-content" class:mobile-open={mobileOpen}>
         {@render children?.()}
       </div>
     {:else}
