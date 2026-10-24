@@ -3,20 +3,7 @@
   import { toast } from '../toast.svelte'
 </script>
 
-<style>
-  .toast-manager {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    z-index: 10000;
-    pointer-events: none;
-  }
-</style>
-
-<div class="toast-manager">
+<div class="toast-manager" role="status" aria-live="polite" aria-atomic="false">
   {#each toast.all as t (t.id)}
     <Toast
       message={t.message}
@@ -28,3 +15,17 @@
     />
   {/each}
 </div>
+
+<style>
+  .toast-manager {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    z-index: var(--z-toast, 3000);
+    pointer-events: none;
+    max-width: calc(100vw - var(--space-6) * 2);
+  }
+</style>

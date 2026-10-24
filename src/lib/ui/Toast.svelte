@@ -5,7 +5,6 @@
   import type { BlueniteProps } from '../types'
   import '../styles/Toast.css'
   import type { HTMLAttributes } from 'svelte/elements'
-  import { clickOutside } from '../utils.svelte'
 
   export type ToastVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
 
@@ -30,56 +29,74 @@
     children,
     class: _class,
     overrideClasses,
+    ...rest
   }: ToastProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'toast'))
+  let className = $derived(cn(overrideClasses, _class, 'toast', `toast-${variant}`))
 
-  let remaining = $state<number>(0)
-  let startTime = $state(0)
-  let timer = $state<ReturnType<typeof setTimeout> | null>(null)
+  let remaining = $derived(duration)
+  let startTime = 0
+  let timer: ReturnType<typeof setTimeout> | null = null
 
-  function startTimer() {
-    remaining = duration
-    startTime = Date.now()
-    timer = setTimeout(() => {
-      onClose?.()
-    }, remaining)
-  }
-
-  function pauseTimer() {
+  function clearTimer() {
     if (timer) {
       clearTimeout(timer)
       timer = null
     }
-    
-    remaining -= Date.now() - startTime
   }
 
-  function handleMouseenter() {
-    pauseTimer()
+  function startTimer() {
+    if (remaining <= 0) return
+    startTime = Date.now()
+    timer = setTimeout(() => onClose?.(), remaining)
   }
 
-  function handleMouseleave() {
-    startTimer()
+  function pauseTimer() {
+    if (!timer) return
+    clearTimer()
+    remaining = Math.max(0, remaining - (Date.now() - startTime))
   }
 
   $effect(() => {
-    startTimer()
-    return () => {
-      if (timer) clearTimeout(timer)
+    if (duration <= 0) {
+      clearTimer()
+      return
     }
+    remaining = duration
+    startTimer()
+    return clearTimer
   })
+
+  function handlePointerEnter() {
+    pauseTimer()
+  }
+
+  function handlePointerLeave() {
+    startTimer()
+  }
+
+  function handleFocusIn(event: FocusEvent) {
+    const next = event.relatedTarget as Node | null
+    if (!next || !event.currentTarget) return
+    if (!(event.currentTarget as Node).contains(next)) return
+    pauseTimer()
+  }
+
+  function handleFocusOut(event: FocusEvent) {
+    const next = event.relatedTarget as Node | null
+    if (next && (event.currentTarget as Node).contains(next)) return
+    startTimer()
+  }
 </script>
 
 <div
   class={className}
-  style="--variant-color: var(--{variant});"
   transition:fade={{ duration: 150 }}
-  role="status"
-  aria-live="polite"
-  use:clickOutside={() => onClose?.()}
-  onmouseenter={handleMouseenter}
-  onmouseleave={handleMouseleave}
+  onpointerenter={handlePointerEnter}
+  onpointerleave={handlePointerLeave}
+  onfocusin={handleFocusIn}
+  onfocusout={handleFocusOut}
+  {...rest}
 >
   {#if icon}
     <div class="toast-icon-wrapper">
@@ -102,7 +119,15 @@
     onclick={() => onClose?.()}
     aria-label="Dismiss notification"
   >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>

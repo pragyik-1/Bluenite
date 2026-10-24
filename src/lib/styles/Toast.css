@@ -1,36 +1,61 @@
 .toast {
   pointer-events: auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  align-items: flex-start;
+  gap: var(--space-3);
   min-width: 280px;
   max-width: 420px;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--variant-color, var(--primary));
+  padding: var(--space-3) var(--space-4);
+  background-color: color-mix(in srgb, var(--variant-color, var(--primary)) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--variant-color, var(--primary)) 25%, var(--border));
   border-radius: var(--round-md);
-  padding: 12px 16px;
   color: var(--primary-text);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
-              0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-toast);
+  overflow: hidden;
+}
+
+.toast-primary {
+  --variant-color: var(--primary);
+}
+
+.toast-secondary {
+  --variant-color: var(--secondary);
+}
+
+.toast-success {
+  --variant-color: var(--success);
+}
+
+.toast-danger {
+  --variant-color: var(--danger);
+}
+
+.toast-warn {
+  --variant-color: var(--warn);
+}
+
+.toast-info {
+  --variant-color: var(--info);
 }
 
 .toast-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-1);
   flex: 1;
+  min-width: 0;
 }
 
 .toast-message {
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1.4;
+  color: var(--primary-text);
 }
 
 .toast-description {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.45;
   color: var(--secondary-text);
 }
 
@@ -38,23 +63,37 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  color: var(--variant-color);
 }
 
 .toast-close {
   flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--secondary-text);
-  cursor: pointer;
-  padding: 2px;
-  border-radius: var(--round-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.15s, background-color 0.15s;
+  padding: var(--space-1);
+  width: 1.5rem;
+  height: 1.5rem;
+  background: none;
+  border: none;
+  border-radius: var(--round-sm);
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .toast-close:hover {
   color: var(--primary-text);
-  background-color: color-mix(in srgb, var(--primary-text) 10%, transparent);
+  background-color: var(--surface-hover);
+}
+
+.toast-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
 }
