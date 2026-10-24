@@ -32,17 +32,16 @@
   }: CardProps = $props()
 
   let className = $derived(
-    cn(overrideClasses, _class, 'card', {
-      interactive,
-      'no-padding': noPadding
-    })
+    cn(
+      overrideClasses,
+      _class,
+      'card',
+      interactive ? 'interactive' : undefined,
+      noPadding ? 'no-padding' : undefined,
+    ),  
   )
 
-  let a11yAttrs = $derived(
-    interactive
-      ? { role: 'button' as const, tabindex: 0 }
-      : {}
-  )
+  let a11yAttrs = $derived(interactive ? { role: 'button' as const, tabindex: 0 } : {})
 
   function handleKeydown(event: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement }) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -56,7 +55,7 @@
 <div
   class={className}
   {...a11yAttrs}
-  onclick={onclick}
+  {onclick}
   onkeydown={interactive ? handleKeydown : onkeydown}
   {...rest}
 >
