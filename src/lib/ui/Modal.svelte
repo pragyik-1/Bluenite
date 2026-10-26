@@ -11,14 +11,18 @@
     onClose?: () => void
     title?: string
     size?: 'sm' | 'md' | 'lg'
+    closeOnInsideClick: boolean
+    closeOnBackdropClick: boolean
   }
 
   let {
     open = $bindable(false),
-    onClose,
+    onClose = () => (open = false),
     children,
     title,
     size = 'md',
+    closeOnInsideClick = false,
+    closeOnBackdropClick = true,
     class: _class,
     overrideClasses,
     ...rest
@@ -30,18 +34,13 @@
   let modalNode = $state<HTMLElement | null>(null)
   let previousFocus = $state<HTMLElement | null>(null)
 
-  function close() {
-    open = false
-    onClose?.()
-  }
-
   const FOCUSABLE =
     'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
   function handleGlobalKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape') {
       e.stopPropagation()
-      close()
+      onClose()
       return
     }
     if (e.key !== 'Tab' || !modalNode) return
@@ -95,13 +94,12 @@
   <div
     transition:fade={{ duration: 120 }}
     class="modal-backdrop"
-    onclick={close}
+    onclick={() => closeOnBackdropClick && onClose()}
     role="presentation"
   >
-    <div
+    <dialog
       bind:this={modalNode}
-      tabindex="-1"
-      role="dialog"
+      onclick={(e) => (closeOnInsideClick ? onClose() : e.stopPropagation())}
       aria-modal="true"
       aria-label={title}
       class="modal-focus-trap"
@@ -109,6 +107,6 @@
       <Card class={modalClassName} {title} {...rest}>
         {@render children?.()}
       </Card>
-    </div>
+    </dialog>
   </div>
 {/if}
