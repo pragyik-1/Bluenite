@@ -42,7 +42,8 @@
       "types": "./dist/index.d.ts",
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
-    }
+    },
+    "./styles": "./src/app.css"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"

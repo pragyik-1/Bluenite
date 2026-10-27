@@ -28,10 +28,10 @@
 
   let generatedId = $props.id()
   let textareaId = $derived(id ?? `textarea-${generatedId}`)
-  let textareaClassName = $derived(cn(overrideClasses, _class, 'textarea'))
+  let textareaClassName = $derived(cn(_class, 'textarea', { override: overrideClasses }))
 </script>
 
-<div class={cn(overrideClasses, wrapperClass, 'textarea-wrapper')}>
+<div class={cn(wrapperClass, 'textarea-wrapper', { override: overrideClasses })}>
   {#if label}
     <label class="input-label" for={textareaId}>{label}</label>
   {/if}

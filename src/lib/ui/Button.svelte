@@ -30,7 +30,7 @@
     ...rest
   }: ButtonProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'button', variant, size, color))
+  let className = $derived(cn(_class, 'button', variant, size, color, { override: overrideClasses }))
 </script>
 
 <button

@@ -7,7 +7,7 @@
   import '../styles/Dropdown.css'
   import { fade } from 'svelte/transition'
 
-  export type DropDownProps = HTMLAttributes<HTMLDivElement> &
+  export type DropdownProps = HTMLAttributes<HTMLDivElement> &
     BlueniteProps & {
       open?: boolean
       anchor: HTMLElement | null
@@ -16,6 +16,8 @@
       onClose?: () => void
       matchAnchorWidth?: boolean
     }
+
+  export type DropDownProps = DropdownProps
 
   let {
     anchor,
@@ -29,7 +31,7 @@
     ...rest
   }: DropDownProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'dropdown'))
+  let className = $derived(cn(_class, 'dropdown', { override: overrideClasses }))
   let dropdownNode = $state<HTMLElement | null>(null)
 
   function close() {

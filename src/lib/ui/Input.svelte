@@ -27,8 +27,8 @@
 
   let generatedId = $props.id()
   let inputId = $derived(id ?? `input-${generatedId}`)
-  let inputClassName = $derived(cn(overrideClasses, _class, 'input', error ? 'error' : undefined))
-  let wrapperClassName = $derived(cn(overrideClasses, wrapperClass, 'input-wrapper'))
+  let inputClassName = $derived(cn(_class, 'input', error ? 'error' : undefined, { override: overrideClasses }))
+  let wrapperClassName = $derived(cn(wrapperClass, 'input-wrapper', { override: overrideClasses }))
 </script>
 
 <div class={wrapperClassName}>

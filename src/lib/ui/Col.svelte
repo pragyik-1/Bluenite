@@ -21,7 +21,7 @@
     ...rest
   }: ColProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'col-container'))
+  let className = $derived(cn(_class, 'col-container', { override: overrideClasses }))
 
   const alignStyles = {
     center: 'align-items: center;',

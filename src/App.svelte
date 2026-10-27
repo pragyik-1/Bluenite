@@ -4,40 +4,53 @@
     Button,
     Input,
     Dropdown,
+    DropdownMenu,
+    DropdownMenuItem,
     Select,
     Card,
     Modal,
     Switch,
-    NavBar,
+    Navbar,
     Textarea,
     ToastManager,
     toast,
     toggleTheme,
+    theme,
   } from './lib'
 
   type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
   type Placement = 'top' | 'right' | 'bottom' | 'left' | 'bottom-start' | 'bottom-end'
+  type ToastPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
 
   let buttonRef = $state<HTMLButtonElement | null>(null)
   let dropdownOpen = $state(false)
   let dropdownPlacement = $state<Placement>('bottom')
 
+  let menuRef = $state<HTMLButtonElement | null>(null)
+  let dropdownMenuOpen = $state(false)
+
   let modalOpen = $state(false)
   let modalSize = $state<'sm' | 'md' | 'lg'>('md')
 
   let selectValue = $state('apple')
+  let selectNameValue = $state('banana')
   let inputValue = $state('')
   let textareaValue = $state('')
   let switchValue = $state(false)
 
-  let theme = $state<'dark' | 'light'>('dark')
-
   const variants: Variant[] = ['primary', 'secondary', 'success', 'danger', 'warn', 'info']
   const placements: Placement[] = ['bottom', 'top', 'left', 'right', 'bottom-start', 'bottom-end']
+  const toastPositions: ToastPosition[] = [
+    'top-left',
+    'top-center',
+    'top-right',
+    'bottom-left',
+    'bottom-center',
+    'bottom-right',
+  ]
 
   function handleThemeToggle() {
     toggleTheme()
-    theme = theme === 'dark' ? 'light' : 'dark'
   }
 
   function showToast(variant: Variant) {
@@ -49,12 +62,12 @@
   }
 </script>
 
-<NavBar behavior="hide-on-scroll">
+<Navbar behavior="hide-on-scroll">
   <strong>Bluenite</strong>
   <Button size="sm" variant="ghost" onclick={handleThemeToggle}>
-    {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+    {theme.value === 'dark' ? 'Light mode' : 'Dark mode'}
   </Button>
-</NavBar>
+</Navbar>
 
 <main class="page">
   <header class="page-header">
@@ -165,7 +178,18 @@
     <h2>Select</h2>
     <div class="grid-2">
       <Select
-        value={selectValue}
+        label="Fruit"
+        placeholder="Pick a fruit"
+        bind:value={selectValue}
+        options={[
+          { value: 'apple', label: 'Apple' },
+          { value: 'banana', label: 'Banana' },
+          { value: 'cherry', label: 'Cherry' },
+        ]}
+      />
+      <Select
+        label="With form name"
+        bind:value={selectNameValue}
         options={[
           { value: 'apple', label: 'Apple' },
           { value: 'banana', label: 'Banana' },
@@ -248,6 +272,19 @@
         </Button>
       {/each}
     </div>
+
+    <h3>DropdownMenu (accessible)</h3>
+    <div class="row">
+      <Button bind:ref={menuRef} onclick={() => (dropdownMenuOpen = !dropdownMenuOpen)}>
+        Open dropdown menu
+      </Button>
+    </div>
+
+    <DropdownMenu bind:open={dropdownMenuOpen} anchor={menuRef} label="Actions">
+      <DropdownMenuItem onclick={() => (dropdownMenuOpen = false)}>Profile</DropdownMenuItem>
+      <DropdownMenuItem onclick={() => (dropdownMenuOpen = false)}>Settings</DropdownMenuItem>
+      <DropdownMenuItem destructive onclick={() => (dropdownMenuOpen = false)}>Sign out</DropdownMenuItem>
+    </DropdownMenu>
   </section>
 
   <section>
@@ -293,6 +330,46 @@
         onclick={() => toast.show({ message: 'Long message', description: 'And a description underneath for extra context.' })}
       >
         Message + description
+      </Button>
+    </div>
+
+    <h3>Positions</h3>
+    <div class="row">
+      {#each toastPositions as pos}
+        <Button
+          size="sm"
+          variant="outline"
+          onclick={() =>
+            toast.show({
+              message: `Toast at ${pos}`,
+              description: 'Positioned via toast.show()',
+              position: pos,
+            })}
+        >
+          {pos}
+        </Button>
+      {/each}
+    </div>
+
+    <h3>Configure defaults</h3>
+    <div class="row">
+      <Button
+        variant="outline"
+        onclick={() => {
+          toast.configure({ duration: 2000, position: 'top-center' })
+          toast.show({ message: 'Configured defaults', description: '2s duration, top-center' })
+        }}
+      >
+        Configure defaults
+      </Button>
+      <Button
+        variant="ghost"
+        onclick={() => {
+          toast.configure({ duration: 4000, position: 'bottom-right' })
+          toast.clear()
+        }}
+      >
+        Reset defaults & clear
       </Button>
     </div>
   </section>

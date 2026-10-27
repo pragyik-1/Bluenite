@@ -32,7 +32,7 @@
     typeof size === 'number' ? size : size === 'sm' ? 20 : size === 'lg' ? 32 : 26,
   )
 
-  let className = $derived(cn(overrideClasses, _class, 'switch-container'))
+  let className = $derived(cn(_class, 'switch-container', { override: overrideClasses }))
 
   let generatedId = $props.id()
   let switchId = $derived(id ?? `switch-${generatedId}`)

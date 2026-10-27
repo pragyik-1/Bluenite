@@ -32,7 +32,7 @@
     ...rest
   }: ToastProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'toast', `toast-${variant}`))
+  let className = $derived(cn(_class, 'toast', `toast-${variant}`, { override: overrideClasses }))
 
   let remaining = $state(0)
   let startTime = 0

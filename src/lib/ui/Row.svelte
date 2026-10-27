@@ -21,7 +21,7 @@
     ...rest
   }: RowProps = $props()
 
-  let className = $derived(cn(overrideClasses, _class, 'row-container'))
+  let className = $derived(cn(_class, 'row-container', { override: overrideClasses }))
 
   const justifyStyles = {
     start: 'justify-content: flex-start;',

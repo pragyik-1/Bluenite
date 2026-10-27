@@ -15,6 +15,8 @@
       scrollThreshold?: number
     }
 
+  export type NavBarProps = NavbarProps
+
   let {
     behavior = 'fixed',
     class: _class,
@@ -29,7 +31,7 @@
   }: NavbarProps = $props()
 
   let className = $derived(
-    cn(overrideClasses, _class, 'navbar-container', mobile ? 'has-mobile' : undefined),
+    cn(_class, 'navbar-container', mobile ? 'has-mobile' : undefined, { override: overrideClasses }),
   )
 
   let generatedId = $props.id()

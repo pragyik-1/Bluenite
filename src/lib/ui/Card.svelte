@@ -33,11 +33,11 @@
 
   let className = $derived(
     cn(
-      overrideClasses,
       _class,
       'card',
       interactive ? 'interactive' : undefined,
       noPadding ? 'no-padding' : undefined,
+      { override: overrideClasses },
     ),  
   )
 
