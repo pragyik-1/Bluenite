@@ -26,11 +26,12 @@
     ...rest
   }: TextareaProps = $props()
 
-  let textareaId = $derived(id || 'textarea-' + Math.random().toString(36).slice(2, 9))
+  let generatedId = $props.id()
+  let textareaId = $derived(id ?? `textarea-${generatedId}`)
   let textareaClassName = $derived(cn(overrideClasses, _class, 'textarea'))
 </script>
 
-<div class="textarea-wrapper {wrapperClass}">
+<div class={cn(overrideClasses, wrapperClass, 'textarea-wrapper')}>
   {#if label}
     <label class="input-label" for={textareaId}>{label}</label>
   {/if}

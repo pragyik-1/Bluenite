@@ -79,6 +79,7 @@
   border-radius: var(--round-sm);
   color: var(--secondary-text);
   cursor: pointer;
+  pointer-events: auto;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 

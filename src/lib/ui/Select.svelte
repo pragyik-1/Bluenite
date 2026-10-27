@@ -48,7 +48,8 @@
   let anchor = $state<HTMLElement | null>(null)
   let listboxNode = $state<HTMLElement | null>(null)
   let highlightedIndex = $state(-1)
-  let selectId = $derived(id || 'select-' + Math.random().toString(36).slice(2, 9))
+  let generatedId = $props.id()
+  let selectId = $derived(id ?? `select-${generatedId}`)
   let listboxId = $derived(selectId + '-listbox')
 
   let selectedLabel = $derived(options.find((opt) => opt.value === value)?.label)

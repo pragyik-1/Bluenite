@@ -34,7 +34,7 @@
 
   let className = $derived(cn(overrideClasses, _class, 'toast', `toast-${variant}`))
 
-  let remaining = $derived(duration)
+  let remaining = $state(0)
   let startTime = 0
   let timer: ReturnType<typeof setTimeout> | null = null
 
@@ -46,6 +46,7 @@
   }
 
   function startTimer() {
+    clearTimer()
     if (remaining <= 0) return
     startTime = Date.now()
     timer = setTimeout(() => onClose?.(), remaining)
@@ -60,6 +61,7 @@
   $effect(() => {
     if (duration <= 0) {
       clearTimer()
+      remaining = 0
       return
     }
     remaining = duration
@@ -75,16 +77,16 @@
     startTimer()
   }
 
-  function handleFocusIn(event: FocusEvent) {
-    const next = event.relatedTarget as Node | null
-    if (!next || !event.currentTarget) return
-    if (!(event.currentTarget as Node).contains(next)) return
+  function handleFocusIn() {
     pauseTimer()
   }
 
   function handleFocusOut(event: FocusEvent) {
-    const next = event.relatedTarget as Node | null
-    if (next && (event.currentTarget as Node).contains(next)) return
+    const currentTarget = event.currentTarget as Node | null
+    const relatedTarget = event.relatedTarget as Node | null
+    if (currentTarget && relatedTarget && currentTarget.contains(relatedTarget)) {
+      return
+    }
     startTimer()
   }
 </script>

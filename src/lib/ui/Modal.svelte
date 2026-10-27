@@ -11,8 +11,8 @@
     onClose?: () => void
     title?: string
     size?: 'sm' | 'md' | 'lg'
-    closeOnInsideClick: boolean
-    closeOnBackdropClick: boolean
+    closeOnInsideClick?: boolean
+    closeOnBackdropClick?: boolean
   }
 
   let {
