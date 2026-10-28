@@ -7,7 +7,7 @@
   padding: 8px 10px;
   cursor: pointer;
   border: none;
-  background: transparent;
+  background-color: transparent;
   color: var(--primary-text);
   border-radius: var(--round-md);
   font-family: inherit;

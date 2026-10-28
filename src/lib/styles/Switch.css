@@ -34,32 +34,32 @@
   flex-shrink: 0;
   width: var(--track-w);
   height: var(--switch-h);
-  background: var(--control-bg);
+  background-color: var(--control-bg);
   border-radius: var(--switch-h);
   transition: background-color 0.2s ease;
 }
 
 .switch-thumb {
   position: absolute;
-  left: var(--padding-w);
+  left: 0;
   top: 50%;
   width: var(--thumb-s);
   height: var(--thumb-s);
-  transform: translateY(-50%);
-  background: var(--control);
+  transform: translate(var(--padding-w), -50%);
+  background-color: var(--control);
   border-radius: 50%;
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
   transition:
-    left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
     background-color 0.2s ease;
 }
 
 .switch-input:checked ~ .switch-track {
-  background: var(--primary);
+  background-color: var(--primary);
 }
 
 .switch-input:checked ~ .switch-track .switch-thumb {
-  left: calc(var(--track-w) - var(--thumb-s) - var(--padding-w));
+  transform: translate(calc(var(--track-w) - var(--thumb-s) - var(--padding-w)), -50%);
 }
 
 .switch-input:focus-visible ~ .switch-track {

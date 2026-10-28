@@ -74,13 +74,15 @@
   padding: var(--space-1);
   width: 1.5rem;
   height: 1.5rem;
-  background: none;
+  background-color: transparent;
   border: none;
   border-radius: var(--round-sm);
   color: var(--secondary-text);
   cursor: pointer;
   pointer-events: auto;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .toast-close:hover {
@@ -90,7 +92,9 @@
 
 .toast-close:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
