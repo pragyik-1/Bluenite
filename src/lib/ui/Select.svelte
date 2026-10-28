@@ -18,12 +18,16 @@
     placeholder?: string
     disabled?: boolean
     id?: string
+    name?: string
+    required?: boolean
     optionStyle?: string
     optionClass?: string
     wrapperClass?: string
     wrapperStyle?: string
     style?: string
     class?: string
+    error?: string
+    helperText?: string
   }
 
   let {
@@ -33,16 +37,22 @@
     placeholder = 'Select...',
     disabled = false,
     id,
+    name,
+    required = false,
     optionClass = '',
     optionStyle = '',
     wrapperClass = '',
     wrapperStyle = '',
     class: _class,
     overrideClasses,
+    error,
+    helperText,
     ...rest
   }: SelectProps = $props()
 
-  let wrapperClassName = $derived(cn(overrideClasses, _class, 'select-wrapper', wrapperClass))
+  let wrapperClassName = $derived(
+    cn(_class, 'select-wrapper', wrapperClass, { override: overrideClasses }),
+  )
 
   let open = $state(false)
   let anchor = $state<HTMLElement | null>(null)
@@ -51,8 +61,14 @@
   let generatedId = $props.id()
   let selectId = $derived(id ?? `select-${generatedId}`)
   let listboxId = $derived(selectId + '-listbox')
+  let errorId = $derived(selectId + '-error')
+  let helperId = $derived(selectId + '-helper')
 
   let selectedLabel = $derived(options.find((opt) => opt.value === value)?.label)
+
+  function toFormValue(value: unknown): string {
+    return value === null || value === undefined ? '' : String(value)
+  }
 
   function handleSelect(optValue: unknown) {
     value = optValue
@@ -142,23 +158,33 @@
     <label class="input-label" for={selectId}>{label}</label>
   {/if}
 
-  <button
-    id={selectId}
-    type="button"
-    class="select-trigger"
-    {disabled}
-    bind:this={anchor}
-    onclick={() => !disabled && (open = !open)}
-    onkeydown={handleKeydown}
-    aria-expanded={open}
-    aria-haspopup="listbox"
-    aria-controls={listboxId}
-  >
-    <span class:select-placeholder={!selectedLabel}>
-      {selectedLabel ?? placeholder}
-    </span>
-
+  <div class="select-input-wrap">
+    <button
+      id={selectId}
+      type="button"
+      class="select-trigger"
+      class:error
+      role="combobox"
+      {disabled}
+      bind:this={anchor}
+      onclick={() => !disabled && (open = !open)}
+      onkeydown={handleKeydown}
+      aria-expanded={open}
+      aria-haspopup="listbox"
+      aria-controls={listboxId}
+      aria-activedescendant={open && highlightedIndex >= 0
+        ? `${selectId}-option-${highlightedIndex}`
+        : undefined}
+      aria-invalid={error ? true : undefined}
+      aria-required={required || undefined}
+      aria-describedby={error ? errorId : helperText ? helperId : undefined}
+    >
+      <span class:select-placeholder={!selectedLabel}>
+        {selectedLabel ?? placeholder}
+      </span>
+    </button>
     <svg
+      class="select-chevron"
       width="16"
       height="16"
       viewBox="0 0 24 24"
@@ -167,13 +193,24 @@
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      style="transform: rotate({open
+      style="transform: translateY(-50%) rotate({open
         ? '180deg'
         : '0deg'}); transition: transform 0.2s; opacity: 0.5;"
+      aria-hidden="true"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
-  </button>
+  </div>
+
+  {#if name !== undefined && name !== ''}
+    <input type="hidden" {name} value={toFormValue(value)} {disabled} />
+  {/if}
+
+  {#if error}
+    <span class="input-error" id={errorId}>{error}</span>
+  {:else if helperText}
+    <span class="input-helper" id={helperId}>{helperText}</span>
+  {/if}
 
   <Dropdown
     {anchor}
@@ -191,11 +228,13 @@
       {#each options as option, i (option.value)}
         <button
           type="button"
+          id={`${selectId}-option-${i}`}
           class="select-item {optionClass}"
           style={optionStyle}
           class:selected={value === option.value}
           class:highlighted={highlightedIndex === i}
           role="option"
+          tabindex="-1"
           aria-selected={value === option.value}
           onclick={() => handleSelect(option.value)}
           onmouseenter={() => (highlightedIndex = i)}
