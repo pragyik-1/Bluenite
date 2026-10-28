@@ -6,12 +6,13 @@ A dark-mode-first UI component library for [Svelte 5](https://svelte.dev), built
 
 ## Features
 
-- **Svelte 5 runes**: Every component uses the modern `$props()`, `$state`, `$derived`, `$effect`, and `$bindable` API — no deprecated let/export syntax.
-- **Theming**: CSS custom properties with automatic light/dark switching and `localStorage` persistence.
+- **Svelte 5 runes**: Every component uses the modern `$props()`, `$state`, `$derived`, `$effect`, and `$bindable` API.
+- **Theming**: CSS custom properties with explicit light/dark switching and `localStorage` persistence via `initTheme()`.
 - **TypeScript**: First-class types and exported prop types for every component.
-- **Snippets**: Content is passed via [snippets](https://svelte.dev/docs/svelte/snippets) instead of slots.
+- **Snippets**: Content is passed via [snippets](https://svelte.dev/docs/svelte/snippets).
 - **Floating UI**: Dropdowns are positioned with `@floating-ui/dom`.
 - **Accessible**: ARIA attributes, keyboard navigation, and focus management built in.
+- **CSS exports**: `@hermitk/bluenite/styles` and `@hermitk/bluenite/styles/*` available.
 
 ## Installation
 
@@ -25,7 +26,11 @@ Requires `svelte@^5.0.0` as a peer dependency.
 
 ```svelte
 <script>
-  import { Button, Input, theme, toggleTheme } from 'bluenite'
+  import { Button, Input, theme, toggleTheme, initTheme } from '@hermitk/bluenite'
+  import { onMount } from 'svelte'
+  import '@hermitk/bluenite/styles'
+
+  onMount(() => initTheme())
 </script>
 
 <button onclick={toggleTheme}>
@@ -34,28 +39,27 @@ Requires `svelte@^5.0.0` as a peer dependency.
 
 <Input label="Name" placeholder="Enter your name" />
 
-<Button color="primary" onclick={() => console.log('clicked')}>
-  Click me
-</Button>
+<Button color="primary" onclick={() => console.log('clicked')}>Click me</Button>
 ```
 
-> **Note:** Bluenite is dark-mode-first. Add the class `light` or `dark` to your root `<html>` element to select a theme, or call `toggleTheme()` programmatically. The chosen theme is persisted to `localStorage`.
+> **Note:** Bluenite is dark-mode-first. Initialize with `initTheme()` and use `toggleTheme()` or `setTheme()`. The chosen theme is persisted to `localStorage`. Theme changes apply atomically; transitions are briefly suppressed to avoid color flashes.
 
 ## Components
 
-| Component | Description |
-| --- | --- |
-| [`Button`](#button) | Button with variants, colors, sizes, icons, and loading state |
-| [`Card`](#card) | Surface container for grouping content |
-| [`Row` / `Col`](#row--col) | Flexbox layout helpers |
-| [`Input`](#input) | Text input with label, error, and helper text |
-| [`Textarea`](#textarea) | Multi-line text input with label, error, and helper text |
-| [`Select`](#select) | Accessible dropdown select with keyboard navigation |
-| [`Dropdown`](#dropdown) | Floating menu positioned relative to an anchor element |
-| [`Switch`](#switch) | Toggle switch |
-| [`Modal`](#modal) | Dialog overlay |
-| [`NavBar`](#navbar) | Navigation bar container |
-| [`Toast` / `ToastManager`](#toast--toastmanager) | Notification toasts |
+| Component                                                              | Description                                                   |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [`Button`](#button)                                                    | Button with variants, colors, sizes, icons, and loading state |
+| [`Card`](#card)                                                        | Surface container for grouping content                        |
+| [`Row` / `Col`](#row--col)                                             | Flexbox layout helpers                                        |
+| [`Input`](#input)                                                      | Text input with label, error, and helper text                 |
+| [`Textarea`](#textarea)                                                | Multi-line text input with label, error, and helper text      |
+| [`Select`](#select)                                                    | Dropdown select with keyboard navigation and form support     |
+| [`Dropdown`](#dropdown)                                                | Floating container positioned relative to an anchor element   |
+| [`DropdownMenu` / `DropdownMenuItem`](#dropdownmenu--dropdownmenuitem) | Accessible dropdown menu with keyboard navigation             |
+| [`Switch`](#switch)                                                    | Toggle switch                                                 |
+| [`Modal`](#modal)                                                      | Dialog overlay                                                |
+| [`Navbar`](#navbar)                                                    | Navigation bar container                                      |
+| [`Toast` / `ToastManager`](#toast--toastmanager)                       | Notification toasts with positions                            |
 
 ## Usage
 
@@ -83,33 +87,63 @@ Requires `svelte@^5.0.0` as a peer dependency.
 
 ```svelte
 <script>
-  import { Select } from 'bluenite'
+  import { Select } from '@hermitk/bluenite'
 
   let value = $state('us')
   const options = [
     { label: 'United States', value: 'us' },
     { label: 'Canada', value: 'ca' },
-    { label: 'Mexico', value: 'mx' }
+    { label: 'Mexico', value: 'mx' },
   ]
 </script>
 
-<Select {options} bind:value label="Country" />
+<Select {options} bind:value label="Country" name="country" />
 ```
 
-### Toast
+**Props:** `options`, `value` (bindable), `label`, `placeholder`, `name`, `required`, `error`, `helperText`, `disabled`, plus `optionClass`, `optionStyle`, `wrapperClass`, and `wrapperStyle`.
+
+### DropdownMenu / DropdownMenuItem
+
+`Dropdown` is the bare positioned container. `DropdownMenu` adds an accessible `role="menu"` list, keyboard navigation, and item styling.
 
 ```svelte
 <script>
-  import { ToastManager, toast } from 'bluenite'
+  import { DropdownMenu, DropdownMenuItem } from '@hermitk/bluenite'
+
+  let anchor = $state(null)
+  let open = $state(false)
+</script>
+
+<button bind:this={anchor} onclick={() => (open = !open)}>Actions</button>
+
+<DropdownMenu bind:open {anchor} label="Actions">
+  <DropdownMenuItem onclick={() => (open = false)}>Profile</DropdownMenuItem>
+  <DropdownMenuItem destructive onclick={() => (open = false)}>Sign out</DropdownMenuItem>
+</DropdownMenu>
+```
+
+### Toast / ToastManager
+
+```svelte
+<script>
+  import { ToastManager, toast } from '@hermitk/bluenite'
 </script>
 
 <ToastManager />
-<Button onclick={() => toast.show({ message: 'Saved!', variant: 'success' })}>
-  Save
-</Button>
+<Button onclick={() => toast.show({ message: 'Saved!', variant: 'success' })}>Save</Button>
 ```
 
 API: `toast.show({ message, description, variant, duration })` returns an id; `toast.dismiss(id)` removes a toast.
+
+### Navbar
+
+```svelte
+<Navbar behavior="fixed" height="64px">
+  <strong>Bluenite</strong>
+</Navbar>
+```
+
+**Props:** `behavior: 'static' | 'fixed' | 'hide-on-scroll'` (default `'fixed'`), `height` (default `'64px'`), `mobile` (default `true`), `scrollThreshold` (default `64`), `disableSpacing`.
 
 ## Theming
 
