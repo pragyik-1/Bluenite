@@ -43,7 +43,8 @@
       "svelte": "./dist/index.js",
       "default": "./dist/index.js"
     },
-    "./styles": "./src/app.css"
+    "./styles": "./src/app.css",
+    "./styles/*": "./src/lib/styles/*"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
