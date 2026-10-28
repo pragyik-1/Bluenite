@@ -31,7 +31,9 @@
   }: NavbarProps = $props()
 
   let className = $derived(
-    cn(_class, 'navbar-container', mobile ? 'has-mobile' : undefined, { override: overrideClasses }),
+    cn(_class, 'navbar-container', mobile ? 'has-mobile' : undefined, {
+      override: overrideClasses,
+    }),
   )
 
   let generatedId = $props.id()
