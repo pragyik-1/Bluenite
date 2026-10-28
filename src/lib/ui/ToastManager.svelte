@@ -35,7 +35,7 @@
   }
 </script>
 
-{#each positions as pos}
+{#each positions as pos (pos)}
   {@const items = toast.all.filter((t) => (t.position ?? 'bottom-right') === pos)}
   {#if items.length > 0}
     <div

@@ -84,7 +84,7 @@
   <section>
     <h2>Color tokens</h2>
     <div class="palette">
-      {#each variants as color}
+      {#each variants as color (color)}
         <div class="swatch">
           <div class="swatch-color" style="background: var(--{color})"></div>
           <span class="swatch-label">{color}</span>
@@ -105,21 +105,21 @@
 
     <h3>Colors</h3>
     <div class="row">
-      {#each variants as color}
+      {#each variants as color (color)}
         <Button {color}>{color}</Button>
       {/each}
     </div>
 
     <h3>Outline by color</h3>
     <div class="row">
-      {#each variants as color}
+      {#each variants as color (color)}
         <Button variant="outline" {color}>{color}</Button>
       {/each}
     </div>
 
     <h3>Ghost by color</h3>
     <div class="row">
-      {#each variants as color}
+      {#each variants as color (color)}
         <Button variant="ghost" {color}>{color}</Button>
       {/each}
     </div>
@@ -268,7 +268,7 @@
 
     <h3>Placement</h3>
     <div class="row">
-      {#each placements as p}
+      {#each placements as p (p)}
         <Button
           size="sm"
           variant={dropdownPlacement === p ? 'fill' : 'outline'}
@@ -296,7 +296,7 @@
   <section>
     <h2>Modal</h2>
     <div class="row">
-      {#each ['sm', 'md', 'lg'] as s}
+      {#each ['sm', 'md', 'lg'] as s (s)}
         <Button onclick={() => { modalSize = s as 'sm' | 'md' | 'lg'; modalOpen = true }}>
           Open {s}
         </Button>
@@ -318,7 +318,7 @@
 
     <h3>Variants</h3>
     <div class="row">
-      {#each variants as variant}
+      {#each variants as variant (variant)}
         <Button variant="fill" color={variant} onclick={() => showToast(variant)}>{variant}</Button>
       {/each}
     </div>
@@ -341,7 +341,7 @@
 
     <h3>Positions</h3>
     <div class="row">
-      {#each toastPositions as pos}
+      {#each toastPositions as pos (pos)}
         <Button
           size="sm"
           variant="outline"

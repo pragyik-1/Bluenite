@@ -17,19 +17,17 @@
       matchAnchorWidth?: boolean
     }
 
-  export type DropDownProps = DropdownProps
-
   let {
     anchor,
     open = $bindable(false),
     children,
     placement = 'bottom',
     onClose = () => {},
-    matchAnchorWidth = true,
+    matchAnchorWidth = false,
     class: _class,
     overrideClasses,
     ...rest
-  }: DropDownProps = $props()
+  }: DropdownProps = $props()
 
   let className = $derived(cn(_class, 'dropdown', { override: overrideClasses }))
   let dropdownNode = $state<HTMLElement | null>(null)

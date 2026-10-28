@@ -45,7 +45,9 @@
   function getItems(): HTMLButtonElement[] {
     if (!menuNode) return []
     return Array.from(
-      menuNode.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not([disabled]):not([aria-disabled="true"])'),
+      menuNode.querySelectorAll<HTMLButtonElement>(
+        '[role="menuitem"]:not([disabled]):not([aria-disabled="true"])',
+      ),
     )
   }
 
@@ -109,6 +111,7 @@
     class="dropdown-menu-list"
     role="menu"
     aria-label={label}
+    tabindex="0"
     onkeydown={handleKeydown}
   >
     {@render children?.()}

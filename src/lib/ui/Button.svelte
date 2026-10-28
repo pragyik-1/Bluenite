@@ -30,7 +30,9 @@
     ...rest
   }: ButtonProps = $props()
 
-  let className = $derived(cn(_class, 'button', variant, size, color, { override: overrideClasses }))
+  let className = $derived(
+    cn(_class, 'button', variant, size, color, { override: overrideClasses }),
+  )
 </script>
 
 <button
@@ -43,6 +45,7 @@
   bind:this={ref}
   disabled={disabled || loading}
   aria-busy={loading}
+  aria-disabled={disabled || loading ? 'true' : undefined}
   {...rest}
 >
   {#if loading}
