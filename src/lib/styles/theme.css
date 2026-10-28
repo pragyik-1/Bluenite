@@ -87,9 +87,7 @@ html {
   --z-navbar: 100;
 
   --z-toast: 3000;
-  --shadow-toast:
-    0 2px 4px rgb(0 0 0 / 0.15),
-    0 12px 24px -6px rgb(0 0 0 / 0.35);
+  --shadow-toast: 0 2px 4px rgb(0 0 0 / 0.15), 0 12px 24px -6px rgb(0 0 0 / 0.35);
 
   --font-sans:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -133,9 +131,7 @@ html.light {
 
   --shadow-popover: 0 4px 6px -2px rgb(15 23 42 / 0.08), 0 12px 24px -6px rgb(15 23 42 / 0.12);
 
-  --shadow-toast:
-    0 1px 2px rgb(15 23 42 / 0.06),
-    0 8px 20px -4px rgb(15 23 42 / 0.12);
+  --shadow-toast: 0 1px 2px rgb(15 23 42 / 0.06), 0 8px 20px -4px rgb(15 23 42 / 0.12);
 
   --overlay: rgb(15 23 42 / 0.35);
 }

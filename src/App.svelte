@@ -16,7 +16,9 @@
     toast,
     toggleTheme,
     theme,
+    initTheme,
   } from './lib'
+  import { onMount } from 'svelte'
 
   type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'warn' | 'info'
   type Placement = 'top' | 'right' | 'bottom' | 'left' | 'bottom-start' | 'bottom-end'
@@ -48,6 +50,10 @@
     'bottom-center',
     'bottom-right',
   ]
+
+  onMount(() => {
+    initTheme()
+  })
 
   function handleThemeToggle() {
     toggleTheme()

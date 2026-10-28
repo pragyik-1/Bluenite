@@ -17,8 +17,15 @@ export { default as Textarea } from './ui/Textarea.svelte'
 export { default as Toast } from './ui/Toast.svelte'
 export { default as ToastManager } from './ui/ToastManager.svelte'
 
-export { toast, Toast as ToastClass, type ToastItem, type ToastOptions, type ToastPosition, type ToastVariant } from './toast.svelte'
-export { theme, toggleTheme } from './theme.svelte'
+export {
+  toast,
+  Toast as ToastClass,
+  type ToastItem,
+  type ToastOptions,
+  type ToastPosition,
+  type ToastVariant,
+} from './toast.svelte'
+export { theme, applyTheme, setTheme, toggleTheme, initTheme, type Theme } from './theme.svelte'
 export { cn, type ClassValue, type CnOptions } from './cn'
 export { clickOutside, floatingAnchor } from './utils.svelte'
 export type { BlueniteProps } from './types'
