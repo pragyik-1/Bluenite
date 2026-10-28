@@ -31,21 +31,32 @@
   let modalClassName = $derived(
     cn(_class, 'card-container-modal', `modal-${size}`, { override: overrideClasses }),
   )
-  let modalNode = $state<HTMLElement | null>(null)
+  let dialogNode = $state<HTMLDialogElement | null>(null)
   let previousFocus = $state<HTMLElement | null>(null)
 
   const FOCUSABLE =
     'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-  function handleGlobalKeydown(e: KeyboardEvent) {
+  function focusFirstElement() {
+    if (!dialogNode) return
+    const focusable = dialogNode.querySelectorAll<HTMLElement>(FOCUSABLE)
+    if (focusable.length > 0) {
+      focusable[0].focus()
+    } else {
+      dialogNode.focus()
+    }
+  }
+
+  function handleDialogKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape') {
+      e.preventDefault()
       e.stopPropagation()
       onClose()
       return
     }
-    if (e.key !== 'Tab' || !modalNode) return
+    if (e.key !== 'Tab' || !dialogNode) return
 
-    const focusable = modalNode.querySelectorAll<HTMLElement>(FOCUSABLE)
+    const focusable = dialogNode.querySelectorAll<HTMLElement>(FOCUSABLE)
     if (focusable.length === 0) {
       e.preventDefault()
       return
@@ -55,12 +66,12 @@
     const active = document.activeElement
 
     if (e.shiftKey) {
-      if (active === first || !modalNode.contains(active)) {
+      if (active === first || !dialogNode.contains(active)) {
         e.preventDefault()
         last.focus()
       }
     } else {
-      if (active === last || !modalNode.contains(active)) {
+      if (active === last || !dialogNode.contains(active)) {
         e.preventDefault()
         first.focus()
       }
@@ -68,24 +79,30 @@
   }
 
   $effect(() => {
-    if (!open) return
-
-    previousFocus = document.activeElement as HTMLElement
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    document.addEventListener('keydown', handleGlobalKeydown)
-
-    tick().then(() => {
-      modalNode?.focus()
-    })
-
-    return () => {
-      document.removeEventListener('keydown', handleGlobalKeydown)
-      document.body.style.overflow = previousOverflow
+    if (!open) {
+      if (dialogNode?.open) {
+        dialogNode.close()
+      }
       if (previousFocus && document.contains(previousFocus)) {
         previousFocus.focus()
       }
       previousFocus = null
+      return
+    }
+
+    previousFocus = document.activeElement as HTMLElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    tick().then(() => {
+      if (dialogNode?.isConnected && !dialogNode.open) {
+        dialogNode.showModal()
+      }
+      focusFirstElement()
+    })
+
+    return () => {
+      document.body.style.overflow = previousOverflow
     }
   })
 </script>
@@ -94,12 +111,20 @@
   <div
     transition:fade={{ duration: 120 }}
     class="modal-backdrop"
-    onclick={() => closeOnBackdropClick && onClose()}
+    onclick={(e) => {
+      if (e.target === e.currentTarget && closeOnBackdropClick) onClose()
+    }}
     role="presentation"
   >
     <dialog
-      bind:this={modalNode}
-      onclick={(e) => (closeOnInsideClick ? onClose() : e.stopPropagation())}
+      bind:this={dialogNode}
+      onkeydown={handleDialogKeydown}
+      onclick={(e) => {
+        e.stopPropagation()
+        if (closeOnInsideClick || (e.target === dialogNode && closeOnBackdropClick)) {
+          onClose()
+        }
+      }}
       aria-modal="true"
       aria-label={title}
       class="modal-focus-trap"

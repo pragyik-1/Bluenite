@@ -18,6 +18,10 @@
   border: none;
 }
 
+.modal-focus-trap::backdrop {
+  background: transparent;
+}
+
 .card-container-modal {
   width: 100%;
   max-height: 100%;
