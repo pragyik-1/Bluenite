@@ -1,5 +1,6 @@
 import type { ActionReturn } from 'svelte/action'
-import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom'
+import { computePosition, flip, shift, offset, autoUpdate, size, type Placement } from '@floating-ui/dom'
+import type { FloatingOptions } from './types'
 
 export function clickOutside(node: HTMLElement, handler: (e?: Event) => void): ActionReturn {
   const handleClick = (event: MouseEvent): void => {
@@ -17,10 +18,9 @@ export function clickOutside(node: HTMLElement, handler: (e?: Event) => void): A
   }
 }
 
-interface AnchorOptions {
+export type AnchorOptions = FloatingOptions & {
   anchorElement: HTMLElement | null
-  placement?: 'top' | 'bottom' | 'left' | 'right' | 'bottom-start' | 'bottom-end'
-  offsetDistance?: number
+  placement?: Placement
   matchAnchorWidth?: boolean
 }
 
@@ -30,32 +30,48 @@ export function floatingAnchor(
 ): ActionReturn<AnchorOptions> {
   let cleanup: (() => void) | null = null
 
+  function buildMiddleware() {
+    const middleware = [
+      offset(options.offsetDistance ?? 8),
+      flip({
+        padding: options.flipPadding ?? 0,
+        fallbackPlacements: options.flipFallbackPlacements,
+      }),
+      shift({
+        padding: options.shiftPadding ?? 8,
+        crossAxis: options.shiftCrossAxis ?? true,
+      }),
+    ]
+
+    if (options.matchAnchorWidth !== false) {
+      middleware.push(
+        size({
+          padding: options.sizePadding ?? 0,
+          apply({ rects, availableWidth }) {
+            Object.assign(node.style, {
+              width: `${Math.min(rects.reference.width, availableWidth)}px`,
+              boxSizing: 'border-box',
+            })
+          },
+        }),
+      )
+    }
+
+    return middleware
+  }
+
   function updatePosition() {
     if (!options.anchorElement || !node) return
 
     computePosition(options.anchorElement, node, {
-      placement: options.placement || 'bottom-start',
-      middleware:
-        options.matchAnchorWidth !== false
-          ? [
-              offset(options.offsetDistance ?? 8),
-              flip(),
-              shift({ padding: 8 }),
-              size({
-                apply({ rects }) {
-                  Object.assign(node.style, {
-                    width: `${rects.reference.width}px`,
-                    boxSizing: 'border-box',
-                  })
-                },
-              }),
-            ]
-          : [offset(options.offsetDistance ?? 8), flip(), shift({ padding: 8 })],
-    }).then(({ x, y }) => {
+      placement: options.placement ?? 'bottom-start',
+      strategy: options.strategy ?? 'absolute',
+      middleware: buildMiddleware(),
+    }).then(({ x, y, strategy }) => {
       Object.assign(node.style, {
         left: `${x}px`,
         top: `${y}px`,
-        position: 'absolute',
+        position: strategy,
       })
     })
   }

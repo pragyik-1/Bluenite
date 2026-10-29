@@ -31,6 +31,9 @@
   let menuRef = $state<HTMLButtonElement | null>(null)
   let dropdownMenuOpen = $state(false)
 
+  let menuOpen = $state(false)
+  let menuAnchor = $state<HTMLButtonElement | null>(null)
+
   let modalOpen = $state(false)
   let modalSize = $state<'sm' | 'md' | 'lg'>('md')
 
@@ -73,7 +76,30 @@
   <Button size="sm" variant="ghost" onclick={handleThemeToggle}>
     {theme.value === 'dark' ? 'Light mode' : 'Dark mode'}
   </Button>
+  <Button
+    bind:ref={menuAnchor}
+    size="sm"
+    variant="ghost"
+    aria-haspopup="menu"
+    aria-expanded={menuOpen}
+    onclick={() => (menuOpen = !menuOpen)}
+  >
+    Menu
+  </Button>
 </Navbar>
+
+<DropdownMenu
+    bind:open={menuOpen}
+    anchor={menuAnchor}
+    placement="bottom-end"
+    label="Main menu"
+    onClose={() => (menuOpen = false)}
+    floatingOptions={{shiftCrossAxis: false}}
+  >
+    <button role="menuitem">Profile</button>
+    <button role="menuitem">Settings</button>
+    <button role="menuitem">Sign out</button>
+  </DropdownMenu>
 
 <main class="page">
   <header class="page-header">

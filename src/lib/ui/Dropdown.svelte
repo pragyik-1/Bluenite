@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
   import { floatingAnchor } from '../utils.svelte'
   import { cn } from '../cn'
-  import type { BlueniteProps } from '../types'
+  import type { BlueniteProps, FloatingOptions } from '../types'
   import '../styles/Dropdown.css'
   import { fade } from 'svelte/transition'
 
@@ -15,6 +15,7 @@
       placement?: 'top' | 'right' | 'bottom' | 'left' | 'bottom-start' | 'bottom-end'
       onClose?: () => void
       matchAnchorWidth?: boolean
+      floatingOptions?: FloatingOptions
     }
 
   let {
@@ -25,6 +26,7 @@
     onClose = () => {},
     matchAnchorWidth = false,
     class: _class,
+    floatingOptions = {},
     overrideClasses,
     ...rest
   }: DropdownProps = $props()
@@ -59,7 +61,7 @@
   <div
     class={className}
     bind:this={dropdownNode}
-    use:floatingAnchor={{ anchorElement: anchor, placement, matchAnchorWidth }}
+    use:floatingAnchor={{ anchorElement: anchor, placement, matchAnchorWidth, ...floatingOptions }}
     transition:fade={{ duration: 100 }}
     {...rest}
   >

@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
   import Dropdown from './Dropdown.svelte'
   import { cn } from '../cn'
-  import type { BlueniteProps } from '../types'
+  import type { BlueniteProps, FloatingOptions } from '../types'
   import '../styles/DropdownMenu.css'
 
   export type DropdownMenuProps = HTMLAttributes<HTMLDivElement> &
@@ -15,6 +15,7 @@
       onClose?: () => void
       matchAnchorWidth?: boolean
       label?: string
+      floatingOptions?: FloatingOptions
     }
 
   export type MenuProps = DropdownMenuProps
@@ -29,6 +30,7 @@
     label,
     class: _class,
     overrideClasses,
+    floatingOptions = {},
     ...rest
   }: DropdownMenuProps = $props()
 
@@ -105,7 +107,16 @@
   })
 </script>
 
-<Dropdown {anchor} bind:open {placement} {onClose} {matchAnchorWidth} class={className} {...rest}>
+<Dropdown
+  {anchor}
+  bind:open
+  {placement}
+  {onClose}
+  {matchAnchorWidth}
+  class={className}
+  {floatingOptions}
+  {...rest}
+>
   <div
     bind:this={menuNode}
     class="dropdown-menu-list"
