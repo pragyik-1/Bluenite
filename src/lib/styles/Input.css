@@ -48,20 +48,19 @@
 
 .input[type='file']::file-selector-button {
   border: none;
-  background-color: var(--border);
+  background-color: var(--control-bg);
   color: inherit;
   padding: 4px 10px;
   border-radius: calc(var(--round-md) - 3px);
   font-weight: 500;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: filter 0.2s ease;
+  transition: background-color 0.2s ease;
   margin-right: 10px;
-  filter: brightness(1.2);
 }
 
 .input[type='file']:hover::file-selector-button {
-  filter: brightness(1.4);
+  background-color: color-mix(in srgb, var(--control-bg) 90%, var(--secondary-text));
 }
 
 .input[type='file']:focus-visible {
@@ -78,4 +77,15 @@
   margin-top: 4px;
   font-size: 0.75rem;
   color: var(--secondary-text);
+}
+
+.input[type='number']::-webkit-outer-spin-button,
+.input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
