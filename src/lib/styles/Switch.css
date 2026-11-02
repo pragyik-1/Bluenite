@@ -36,7 +36,9 @@
   height: var(--switch-h);
   background-color: var(--control-bg);
   border-radius: var(--switch-h);
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.15s ease;
 }
 
 .switch-thumb {
@@ -54,17 +56,18 @@
     background-color 0.2s ease;
 }
 
-.switch-input:checked ~ .switch-track {
+.switch-input:checked~.switch-track {
   background-color: var(--primary);
 }
 
-.switch-input:checked ~ .switch-track .switch-thumb {
+.switch-input:checked~.switch-track .switch-thumb {
   transform: translate(calc(var(--track-w) - var(--thumb-s) - var(--padding-w)), -50%);
 }
 
-.switch-input:focus-visible ~ .switch-track {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
+.switch-input:focus-visible~.switch-track {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--primary);
 }
 
 .switch-label {
@@ -74,6 +77,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .switch-track,
   .switch-thumb {
     transition: none;
